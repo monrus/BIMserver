@@ -39,7 +39,7 @@ public class IdEObjectImpl extends MinimalEObjectImpl implements IdEObject {
 	private int pid;
 	private int rid;
 	private long expressId = -1;
-	private IfcModelInterface model;
+	private transient IfcModelInterface model;
 	private State loadingState = State.NO_LAZY_LOADING;
 	private QueryInterface queryInterface;
 	private boolean useInverses = true;
