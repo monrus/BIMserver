@@ -17,15 +17,7 @@ package org.bimserver.utils;
  * along with this program.  If not, see {@literal<http://www.gnu.org/licenses/>}.
  *****************************************************************************/
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -399,7 +391,49 @@ public class IfcUtils {
 		}
 	}
 
+	public static Object nominalValueToObject(org.bimserver.models.ifc4.IfcValue nominalValue) {
+		if (nominalValue instanceof org.bimserver.models.ifc4.IfcLabel) {
+			return ((org.bimserver.models.ifc4.IfcLabel) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcIdentifier) {
+			return ((org.bimserver.models.ifc4.IfcIdentifier) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcBoolean) {
+			return ((org.bimserver.models.ifc4.IfcBoolean) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcText) {
+			return ((org.bimserver.models.ifc4.IfcText) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcLengthMeasure) {
+			return ((org.bimserver.models.ifc4.IfcLengthMeasure) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcPlaneAngleMeasure) {
+			return ((org.bimserver.models.ifc4.IfcPlaneAngleMeasure) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcAreaMeasure) {
+			return ((org.bimserver.models.ifc4.IfcAreaMeasure) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcVolumeMeasure) {
+			return ((org.bimserver.models.ifc4.IfcVolumeMeasure) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcReal) {
+			return ((org.bimserver.models.ifc4.IfcReal) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcPowerMeasure) {
+			return ((org.bimserver.models.ifc4.IfcPowerMeasure) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcInteger) {
+			return ((org.bimserver.models.ifc4.IfcInteger) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcElectricCurrentMeasure) {
+			return ((org.bimserver.models.ifc4.IfcElectricCurrentMeasure) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcLogical) {
+			return ((org.bimserver.models.ifc4.IfcLogical) nominalValue).getWrappedValue();
+		} else if (nominalValue instanceof IfcCountMeasure) {
+			return ((org.bimserver.models.ifc4.IfcCountMeasure) nominalValue).getWrappedValue();
+		} else {
+			throw new RuntimeException("Not implemented: " + nominalValue.eClass().getName());
+		}
+	}
+
 	public static String nominalValueToString(IfcValue nominalValue) {
+		Object object = nominalValueToObject(nominalValue);
+		if (object == null) {
+			return null;
+		}
+		return object.toString();
+	}
+
+	public static String nominalValueToString(org.bimserver.models.ifc4.IfcValue nominalValue) {
 		Object object = nominalValueToObject(nominalValue);
 		if (object == null) {
 			return null;
@@ -420,6 +454,55 @@ public class IfcUtils {
 							if (ifcProperty.getName().equals(propertyName)) {
 								IfcValue nominalValue = propertyValue.getNominalValue();
 								return nominalValueToString(nominalValue);
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	public static Object getProperty(org.bimserver.models.ifc4.IfcObject ifcObject, String setName, String propertyName) {
+		for (org.bimserver.models.ifc4.IfcRelDefines ifcRelDefines : ifcObject.getIsDefinedBy()) {
+			if (ifcRelDefines instanceof org.bimserver.models.ifc4.IfcRelDefinesByProperties) {
+				org.bimserver.models.ifc4.IfcRelDefinesByProperties ifcRelDefinesByProperties = (org.bimserver.models.ifc4.IfcRelDefinesByProperties) ifcRelDefines;
+				org.bimserver.models.ifc4.IfcPropertySetDefinitionSelect propertySetDefinitionSelect = ifcRelDefinesByProperties.getRelatingPropertyDefinition();
+				if (propertySetDefinitionSelect instanceof org.bimserver.models.ifc4.IfcPropertySet) {
+					org.bimserver.models.ifc4.IfcPropertySet ifcPropertySet = (org.bimserver.models.ifc4.IfcPropertySet) propertySetDefinitionSelect;
+					if (!ifcPropertySet.getName().equalsIgnoreCase(setName))
+						continue;
+					for (org.bimserver.models.ifc4.IfcProperty ifcProperty : ifcPropertySet.getHasProperties()) {
+						if (ifcProperty instanceof org.bimserver.models.ifc4.IfcPropertySingleValue) {
+							org.bimserver.models.ifc4.IfcPropertySingleValue propertyValue = (org.bimserver.models.ifc4.IfcPropertySingleValue) ifcProperty;
+							if (ifcProperty.getName().equals(propertyName)) {
+								org.bimserver.models.ifc4.IfcValue nominalValue = propertyValue.getNominalValue();
+								return nominalValueToString(nominalValue);
+							}
+						}
+					}
+				} else if (propertySetDefinitionSelect instanceof org.bimserver.models.ifc4.IfcElementQuantity) {
+					org.bimserver.models.ifc4.IfcElementQuantity ifcQuantitySet = (org.bimserver.models.ifc4.IfcElementQuantity) propertySetDefinitionSelect;
+					for (org.bimserver.models.ifc4.IfcPhysicalQuantity ifcQuantity : ifcQuantitySet.getQuantities()) {
+						if (ifcQuantity instanceof org.bimserver.models.ifc4.IfcPhysicalSimpleQuantity) {
+							org.bimserver.models.ifc4.IfcPhysicalSimpleQuantity quantityValue = (org.bimserver.models.ifc4.IfcPhysicalSimpleQuantity) ifcQuantity;
+							if (!ifcQuantitySet.getName().equalsIgnoreCase(setName))
+								continue;
+							if (quantityValue.getName().equals(propertyName)) {
+								if (quantityValue instanceof org.bimserver.models.ifc4.IfcQuantityArea)
+									return ((org.bimserver.models.ifc4.IfcQuantityArea)quantityValue).getAreaValue();
+								else if (quantityValue instanceof org.bimserver.models.ifc4.IfcQuantityCount)
+									return ((org.bimserver.models.ifc4.IfcQuantityCount)quantityValue).getCountValue();
+								else if (quantityValue instanceof org.bimserver.models.ifc4.IfcQuantityLength)
+									return ((org.bimserver.models.ifc4.IfcQuantityLength)quantityValue).getLengthValue();
+								else if (quantityValue instanceof org.bimserver.models.ifc4.IfcQuantityTime)
+									return ((org.bimserver.models.ifc4.IfcQuantityTime)quantityValue).getTimeValue();
+								else if (quantityValue instanceof org.bimserver.models.ifc4.IfcQuantityVolume)
+									return ((org.bimserver.models.ifc4.IfcQuantityVolume)quantityValue).getVolumeValue();
+								else if (quantityValue instanceof org.bimserver.models.ifc4.IfcQuantityWeight)
+									return ((org.bimserver.models.ifc4.IfcQuantityWeight)quantityValue).getWeightValue();
+								else
+									return null;
 							}
 						}
 					}

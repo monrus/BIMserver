@@ -193,13 +193,17 @@ public class RichIfcModel {
 		IfcArbitraryClosedProfileDef def = create(IfcArbitraryClosedProfileDef.class);
 		def.setProfileType(IfcProfileTypeEnum.AREA);
 		def.setOuterCurve(ifcPolyline);
-		
+
+		return getIfcProductRepresentation(height, def);
+	}
+
+	private IfcProductRepresentation getIfcProductRepresentation(double height, IfcArbitraryClosedProfileDef def) throws IfcModelInterfaceException {
 		IfcExtrudedAreaSolid extrudedAreaSolid = create(IfcExtrudedAreaSolid.class);
 		extrudedAreaSolid.setDepth(height);
 		extrudedAreaSolid.setSweptArea(def);
 		extrudedAreaSolid.setPosition(createBasicPosition(0, 0, 0));
 		extrudedAreaSolid.setExtrudedDirection(createDirection(0, 0, 1));
-		
+
 		IfcProductRepresentation productRepresentation = create(IfcProductRepresentation.class);
 		IfcShapeRepresentation shapeRepresentation = create(IfcShapeRepresentation.class);
 		if (defaultRepresentationContext != null) {
@@ -209,8 +213,26 @@ public class RichIfcModel {
 		shapeRepresentation.setRepresentationIdentifier("Body");
 		shapeRepresentation.getItems().add(extrudedAreaSolid);
 		productRepresentation.getRepresentations().add(shapeRepresentation);
-		
+
 		return productRepresentation;
+	}
+
+	public IfcProductRepresentation createCircularExtrusionProductRepresentation(double radius, double height) throws IfcModelInterfaceException {
+		IfcCircle ifcCircle = create(IfcCircle.class);
+		ifcCircle.setRadius(radius);
+
+		IfcArbitraryClosedProfileDef def = create(IfcArbitraryClosedProfileDef.class);
+		def.setProfileType(IfcProfileTypeEnum.AREA);
+		def.setOuterCurve(ifcCircle);
+
+		return getIfcProductRepresentation(height, def);
+	}
+
+	public IfcProductRepresentation createExtrusionProductRepresentationByCurve(IfcCurve curve, double height) throws IfcModelInterfaceException {
+		IfcArbitraryClosedProfileDef def = create(IfcArbitraryClosedProfileDef.class);
+		def.setProfileType(IfcProfileTypeEnum.AREA);
+		def.setOuterCurve(curve);
+		return getIfcProductRepresentation(height, def);
 	}
 	
 	public void setDefaultRepresentationContext(IfcRepresentationContext defaultRepresentationContext) {
