@@ -86,15 +86,29 @@ public class RichIfcModel {
 		return ifcCartesianPoint;
 	}
 
+	public IfcCartesianPoint createIfcCartesianPoint(double i, double j) throws IfcModelInterfaceException {
+		IfcCartesianPoint ifcCartesianPoint = create(IfcCartesianPoint.class);
+		EList<Double> coordinates = ifcCartesianPoint.getCoordinates();
+		coordinates.add(i);
+		coordinates.add(j);
+		return ifcCartesianPoint;
+	}
+
 	public IfcAxis2Placement3D createBasicPosition(double i, double j, double k) throws IfcModelInterfaceException {
 		IfcAxis2Placement3D axisPlacement = create(IfcAxis2Placement3D.class);
 		axisPlacement.setLocation(createIfcCartesianPoint(i, j, k));
-		
+
 		IfcDirection axis = createDirection(0, 0, 1);
 		IfcDirection direction = createDirection(1, 0, 0);
-		
+
 		axisPlacement.setAxis(axis);
 		axisPlacement.setRefDirection(direction);
+		return axisPlacement;
+	}
+
+	public IfcAxis2Placement2D createBasicPosition(double i, double j) throws IfcModelInterfaceException {
+		IfcAxis2Placement2D axisPlacement = create(IfcAxis2Placement2D.class);
+		axisPlacement.setLocation(createIfcCartesianPoint(i, j));
 		return axisPlacement;
 	}
 
@@ -189,6 +203,7 @@ public class RichIfcModel {
 		points.add(createIfcCartesianPoint(width, depth, 0));
 		points.add(createIfcCartesianPoint(0, depth, 0));
 		points.add(createIfcCartesianPoint(0, 0, 0));
+		ifcPolyline.setDim(2);
 		
 		IfcArbitraryClosedProfileDef def = create(IfcArbitraryClosedProfileDef.class);
 		def.setProfileType(IfcProfileTypeEnum.AREA);
@@ -204,7 +219,7 @@ public class RichIfcModel {
 		extrudedAreaSolid.setPosition(createBasicPosition(0, 0, 0));
 		extrudedAreaSolid.setExtrudedDirection(createDirection(0, 0, 1));
 
-		IfcProductRepresentation productRepresentation = create(IfcProductRepresentation.class);
+		IfcProductDefinitionShape productRepresentation = create(IfcProductDefinitionShape.class);
 		IfcShapeRepresentation shapeRepresentation = create(IfcShapeRepresentation.class);
 		if (defaultRepresentationContext != null) {
 			shapeRepresentation.setContextOfItems(defaultRepresentationContext);
@@ -220,10 +235,12 @@ public class RichIfcModel {
 	public IfcProductRepresentation createCircularExtrusionProductRepresentation(double radius, double height) throws IfcModelInterfaceException {
 		IfcCircle ifcCircle = create(IfcCircle.class);
 		ifcCircle.setRadius(radius);
+		ifcCircle.setDim(2);
 
 		IfcArbitraryClosedProfileDef def = create(IfcArbitraryClosedProfileDef.class);
 		def.setProfileType(IfcProfileTypeEnum.AREA);
 		def.setOuterCurve(ifcCircle);
+
 
 		return getIfcProductRepresentation(height, def);
 	}
