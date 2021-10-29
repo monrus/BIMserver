@@ -21,8 +21,10 @@ import org.bimserver.emf.IdEObject;
 import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.emf.IfcModelInterfaceException;
 import org.bimserver.models.ifc4.*;
+import org.bimserver.plugins.ObjectAlreadyExistsException;
 import org.bimserver.shared.GuidCompressor;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 
 public class RichIfcModel {
 
@@ -61,16 +63,25 @@ public class RichIfcModel {
 	
 	public <T extends IdEObject> T create(Class<T> clazz) throws IfcModelInterfaceException {
 		T object = model.create(clazz);
+		return fillNewObject(object);
+	}
+
+	private <T extends IdEObject> T fillNewObject(T object) throws ObjectAlreadyExistsException {
 		if (object instanceof IfcRoot) {
-			((IfcRoot)object).setGlobalId(GuidCompressor.getNewIfcGloballyUniqueId());
+			((IfcRoot) object).setGlobalId(GuidCompressor.getNewIfcGloballyUniqueId());
 			if (defaultOwnerHistory != null) {
-				((IfcRoot)object).setOwnerHistory(defaultOwnerHistory);
+				((IfcRoot) object).setOwnerHistory(defaultOwnerHistory);
 			}
 		}
 		if (addOnCreate) {
 			model.add(object.getOid(), object);
 		}
 		return object;
+	}
+
+	public <T extends IdEObject> T create(EClass clazz) throws IfcModelInterfaceException {
+		T object = model.create(clazz);
+		return fillNewObject(object);
 	}
 
 	public void setDefaultOwnerHistory(IfcOwnerHistory ownerHistory) {
