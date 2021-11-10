@@ -68,9 +68,11 @@ public class CompareDatabaseAction extends BimDatabaseAction<CompareResult> {
 		if (revision1.getProject().getSchema().equals(revision2.getProject().getSchema())) {
 			ModelComparePluginConfiguration modelCompareObject = getDatabaseSession().get(StorePackage.eINSTANCE.getModelComparePluginConfiguration(), mcid, OldQuery.getDefault());
 			if (modelCompareObject != null) {
+				LOGGER.info("Finding compare class: " + modelCompareObject.getPluginDescriptor().getPluginClassName());
 				ModelComparePlugin modelComparePlugin = bimServer.getPluginManager().getModelComparePlugin(modelCompareObject.getPluginDescriptor().getPluginClassName(), true);
 				if (modelComparePlugin != null) {
 					org.bimserver.plugins.modelcompare.ModelCompare modelCompare = modelComparePlugin.createModelCompare(bimServer.getPluginSettingsCache().getPluginSettings(modelCompareObject.getOid()), packageMetaData);
+					LOGGER.info("Using compare class: " + modelCompare.getClass().getName());
 					return modelCompare;
 				} else {
 					throw new ModelCompareException("No Model Compare found " + modelCompareObject.getPluginDescriptor().getPluginClassName());
