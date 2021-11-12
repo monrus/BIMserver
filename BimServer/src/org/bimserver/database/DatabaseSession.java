@@ -1349,7 +1349,9 @@ public class DatabaseSession implements LazyLoader, OidProvider, DatabaseInterfa
 		while (idEObject != null) {
 			IdEObject result = get(idEObject, idEObject.getOid(), model, query, todoList);
 			if (result == null) {
-				throw new BimserverDatabaseException("Object not found: " + query.getPid() + " " + query.getRid() + " " + idEObject.getOid() + " " + idEObject.eClass().getName());
+				//throw new BimserverDatabaseException("Object not found: " + query.getPid() + " " + query.getRid() + " " + idEObject.getOid() + " " + idEObject.eClass().getName());
+				idEObject = todoList.poll();
+				continue;
 			}
 			if (!model.contains(result.getOid())) {
 				try {

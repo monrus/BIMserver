@@ -253,3 +253,5 @@ Temporary Items
 # End of https://www.toptal.com/developers/gitignore/api/osx,java,eclipse,intellij,maven
 
 .idea/*
+
+tmptestdata

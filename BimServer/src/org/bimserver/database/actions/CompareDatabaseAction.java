@@ -22,6 +22,7 @@ import org.bimserver.BimserverDatabaseException;
 import org.bimserver.database.BimserverLockConflictException;
 import org.bimserver.database.DatabaseSession;
 import org.bimserver.database.OldQuery;
+import org.bimserver.database.OperationType;
 import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.emf.PackageMetaData;
 import org.bimserver.models.log.AccessMethod;
@@ -91,9 +92,10 @@ public class CompareDatabaseAction extends BimDatabaseAction<CompareResult> {
 											// roid2, sCompareType,
 											// sCompareIdentifier);
 		if (compareResults == null) {
-			IfcModelInterface model1 = new DownloadDatabaseAction(bimServer, getDatabaseSession(), getAccessMethod(), roid1, -1, serializerOid, authorization).execute();
-			IfcModelInterface model2 = new DownloadDatabaseAction(bimServer, getDatabaseSession(), getAccessMethod(), roid2, -1, serializerOid, authorization).execute();
-			try {
+			try (DatabaseSession session1 = bimServer.getDatabase().createSession(OperationType.READ_ONLY);
+				 DatabaseSession session2 = bimServer.getDatabase().createSession(OperationType.READ_ONLY)) {
+				IfcModelInterface model1 = new DownloadDatabaseAction(bimServer, session1, getAccessMethod(), roid1, -1, serializerOid, authorization).execute();
+				IfcModelInterface model2 = new DownloadDatabaseAction(bimServer, session2, getAccessMethod(), roid2, -1, serializerOid, authorization).execute();
 				compareResults = getModelCompare().compare(model1, model2, sCompareType);
 			} catch (ModelCompareException e) {
 				LOGGER.error("", e);
