@@ -228,7 +228,6 @@
          "type": "IfcLocalPlacement",
          "fields": ["PlacementRelTo", "RelativePlacement"],
          "includes": [
-            "RelativePlacement",
             {
               "type": "IfcAxis2Placement3D",
                   "fields": [
@@ -238,7 +237,7 @@
                   ]
             }
          ]
-      }, 
+      },
       "IfcMaterial": {
         "type": "IfcMaterial",
         "fields": ["HasRepresentation"],
