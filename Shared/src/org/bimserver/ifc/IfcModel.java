@@ -50,6 +50,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Collectors;
 
 import org.bimserver.emf.IdEObject;
 import org.bimserver.emf.IdEObjectImpl;
@@ -68,12 +69,7 @@ import org.bimserver.shared.exceptions.ServerException;
 import org.bimserver.shared.exceptions.UserException;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.*;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -171,12 +167,25 @@ public abstract class IfcModel implements IfcModelInterface {
 		if (objects.isEmpty()) {
 			return;
 		}
+/*
 		for (EClassifier classifier : objects.values().iterator().next().eClass().getEPackage().getEClassifiers()) {
 			if (classifier instanceof EClass) {
 				Map<String, IdEObject> map = new TreeMap<String, IdEObject>();
 				guidIndex.put((EClass) classifier, map);
 			}
 		}
+		*/
+
+		List<EPackage> packages = objects.values().stream().map(i -> i.eClass().getEPackage()).distinct().collect(Collectors.toList());
+		for (EPackage pack : packages) {
+			for (EClassifier classifier : pack.getEClassifiers()) {
+				if (classifier instanceof EClass) {
+					Map<String, IdEObject> map = new TreeMap<>();
+					guidIndex.put((EClass) classifier, map);
+				}
+			}
+		}
+
 		EClass ifcRootEclass = packageMetaData.getEClass("IfcRoot");
 		EStructuralFeature guidFeature = ifcRootEclass.getEStructuralFeature("GlobalId");
 		for (Long key : objects.keySet()) {
