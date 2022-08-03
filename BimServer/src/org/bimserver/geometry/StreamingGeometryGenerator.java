@@ -62,6 +62,7 @@ import org.bimserver.emf.Schema;
 import org.bimserver.models.geometry.Bounds;
 import org.bimserver.models.geometry.GeometryPackage;
 import org.bimserver.models.geometry.Vector3f;
+import org.bimserver.models.ifc4.IfcSpace;
 import org.bimserver.models.store.RenderEnginePluginConfiguration;
 import org.bimserver.models.store.User;
 import org.bimserver.models.store.UserSettings;
@@ -983,8 +984,9 @@ public class StreamingGeometryGenerator extends GenericGeometryGenerator {
 				hasOpenings.addInclude(objectPlacement);
 			}
 		}
-		
-		queryPart.addInclude(decomposes);
+
+		if (!eClass.getName().equals("IfcSpace"))
+			queryPart.addInclude(decomposes);
 		queryPart.addInclude(ownerHistory);
 		queryPart.addInclude(representationInclude);
 		queryPart.addInclude(objectPlacement);
