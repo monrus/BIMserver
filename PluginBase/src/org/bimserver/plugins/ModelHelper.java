@@ -13,7 +13,7 @@ import org.bimserver.emf.MetaDataManager;
 import org.bimserver.emf.ObjectFactory;
 import org.bimserver.emf.OidProvider;
 import org.bimserver.emf.PackageMetaData;
-import org.bimserver.models.ifc2x3tc1.Ifc4Package;
+import org.bimserver.models.ifc4.Ifc4Package;
 import org.bimserver.shared.GuidCompressor;
 import org.eclipse.emf.common.util.AbstractEList;
 import org.eclipse.emf.common.util.EList;
