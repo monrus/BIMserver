@@ -138,7 +138,8 @@ public class ModelHelper {
 						
 						for (Object o : list) {
 							if (converted.containsKey(o)) {
-								toList.addUnique(converted.get(o));
+								if (!toList.contains(converted.get(o)))
+									toList.addUnique(converted.get(o));
 							} else {
 								if (canFollow) {
 									IdEObject result = copy(originalEClass, (IdEObject) o, setOid);
