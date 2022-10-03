@@ -25,6 +25,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -129,6 +130,36 @@ public class OfflineGeometryGenerator {
 		}
 		return map;
 	}
+
+	public Map<IfcProduct, GeometryInfo> generateForElements(List<IfcProduct> products) {
+		Map<IfcProduct, GeometryInfo> map = new HashMap<>();
+		try {
+			serializer.init(model, null, true);
+			InputStream in = new SerializerInputstream(serializer);
+			renderEngineModel = renderEngine.openModel(in);
+			final RenderEngineSettings settings = new RenderEngineSettings();
+			settings.setPrecision(Precision.SINGLE);
+			settings.setIndexFormat(IndexFormat.AUTO_DETECT);
+			settings.setGenerateNormals(true);
+			settings.setGenerateTriangles(true);
+			settings.setGenerateWireFrame(false);
+
+			final RenderEngineFilter renderEngineFilter = new RenderEngineFilter();
+
+			renderEngineModel.setSettings(settings);
+			renderEngineModel.setFilter(renderEngineFilter);
+			renderEngineModel.generateGeneralGeometry();
+
+			for (IfcProduct ifcProduct : products) {
+				map.put(ifcProduct, generateGeometry2(ifcProduct));
+			}
+		} catch (SerializerException e) {
+			e.printStackTrace();
+		} catch (RenderEngineException e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
 	private GeometryInfo generateGeometry2(IfcProduct ifcProduct) {
 		if (ifcProduct.getRepresentation() != null && ifcProduct.getRepresentation().getRepresentations().size() != 0) {
 			try {
@@ -145,6 +176,12 @@ public class OfflineGeometryGenerator {
 					bounds.setMax(createVector3f(model.getPackageMetaData(), model, -Double.POSITIVE_INFINITY));
 
 					geometryInfo.setBounds(bounds);
+
+					Bounds boundsUntranslated = GeometryFactory.eINSTANCE.createBounds();
+
+					boundsUntranslated.setMin(createVector3f(model.getPackageMetaData(), model, Double.POSITIVE_INFINITY));
+					boundsUntranslated.setMax(createVector3f(model.getPackageMetaData(), model, -Double.POSITIVE_INFINITY));
+					geometryInfo.setBoundsUntransformed(boundsUntranslated);
 
 					try {
 						ObjectNode additionalData = renderEngineInstance.getAdditionalData();
