@@ -31,6 +31,6 @@ public class MetricCollector {
 		if (totalLineLength == 0) {
 			return lineLength;
 		}
-		return (int)(lineLength * totalBytes * 1.1 / totalLineLength);
+		return (int)(lineLength * totalBytes * 1.8 / totalLineLength);
 	}
 }
