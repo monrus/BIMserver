@@ -116,10 +116,8 @@ public class SetWrappedAttributeChange implements Change {
 						value = Tristate.FALSE;
 					}
 				} else if (typeEClass == Ifc4Package.eINSTANCE.getIfcBoolean()) {
-					if ((Boolean)value == true) {
-						value = org.bimserver.models.ifc4.Tristate.TRUE;
-					} else {
-						value = org.bimserver.models.ifc4.Tristate.FALSE;
+					if (value instanceof Boolean || value.getClass().equals(boolean.class)) {
+						value = org.bimserver.models.ifc4.Tristate.valueOf(((Boolean) value).toString().toUpperCase());
 					}
 				}
 				wrappedObject.set(wrappedObject.eClass().getEStructuralFeature("wrappedValue").getName(), value);
