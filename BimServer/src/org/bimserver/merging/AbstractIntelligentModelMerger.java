@@ -20,6 +20,7 @@ package org.bimserver.merging;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.ifc.ReferenceCounter;
+import org.bimserver.models.ifc4.IfcProject;
 import org.bimserver.models.ifc4.IfcRoot;
 import org.bimserver.models.store.Project;
 import org.bimserver.plugins.IfcModelSet;
@@ -221,4 +222,49 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 		referenceCounter.remove(objectToRemove);
 		model.remove(objectToRemove);
 	}
+
+	public Set<IdEObject> getAllReachableObjectsFrom(IdEObject object, boolean stopTraversalOnFindingProject){
+		Set<IdEObject> reachable = new HashSet<>();
+		DFSForObjectGraphTraversal(object, reachable, stopTraversalOnFindingProject);
+		return reachable;
+	}
+
+	private boolean DFSForObjectGraphTraversal(IdEObject object, Set<IdEObject> reachable, boolean stopTraversalOnFindingProject){
+		for (EReference eReference : object.eClass().getEAllReferences()) {
+			if (eReference.isMany()) {
+				List list = (List) object.eGet(eReference);
+				for (Object o : list) {
+					if (o != null) {
+						if (!reachable.contains(o)) {
+							reachable.add((IdEObject) o);
+							if (stopTraversalOnFindingProject && o instanceof IfcProject)
+								return true;
+							if (DFSForObjectGraphTraversal((IdEObject) o, reachable, stopTraversalOnFindingProject))
+								return true;
+						}
+					}
+				}
+			} else {
+				Object o = object.eGet(eReference);
+				if (o != null) {
+					if (!reachable.contains(o)) {
+						reachable.add((IdEObject) o);
+						if (stopTraversalOnFindingProject && o instanceof IfcProject)
+							return true;
+						if (DFSForObjectGraphTraversal((IdEObject) o, reachable, stopTraversalOnFindingProject))
+							return true;
+					}
+
+				}
+			}
+		}
+//		for (EAttribute eAttribute : object.eClass().getEAllAttributes()) {
+//			Object o = object.eGet(eAttribute);
+//			if (o instanceof IdEObject){
+//				
+//			}
+//		}
+		return false;
+	}
+
 }
