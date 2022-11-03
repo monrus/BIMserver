@@ -21,12 +21,15 @@ import org.bimserver.emf.IdEObject;
 import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.ifc.ReferenceCounter;
 import org.bimserver.models.ifc4.IfcProject;
+import org.bimserver.models.ifc4.IfcRelationship;
 import org.bimserver.models.ifc4.IfcRoot;
 import org.bimserver.models.store.Project;
 import org.bimserver.plugins.IfcModelSet;
 import org.bimserver.plugins.ModelHelper;
 import org.bimserver.plugins.modelmerger.MergeException;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -265,6 +268,51 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 //			}
 //		}
 		return false;
+	}
+
+	public List<IfcRelationship> findDuplicateRelsToRemove(List<IfcRelationship> allRels) throws Exception {
+		List<IfcRelationship> duplicates = new ArrayList<>();
+		Map<EClass, List<IfcRelationship>> relsTypesMap = new HashMap<>();
+		for (IfcRelationship rel : allRels) {
+			if (!relsTypesMap.containsKey(rel.eClass()))
+				relsTypesMap.put(rel.eClass(), new ArrayList<>());
+			relsTypesMap.get(rel.eClass()).add(rel);
+		}
+
+		for (EClass eClass : relsTypesMap.keySet()) {
+			List<IfcRelationship> rels = relsTypesMap.get(eClass);
+			for (int i = 0; i < rels.size(); i++){
+				for (int j = i+1; j < rels.size(); j++){
+					if (isEqualsIfcRelationships(rels.get(i), rels.get(j)))
+						duplicates.add(rels.get(j));
+				}
+			}
+		}
+		return duplicates;
+	}
+
+	private boolean isEqualsIfcRelationships(IfcRelationship rel1, IfcRelationship rel2) {
+		if (!rel1.eClass().equals(rel2.eClass()))
+			return false;
+		EList<EReference> refs = rel1.eClass().getEAllReferences();
+		for (EReference ref : refs) {
+			if (ref.getName().equals("OwnerHistory"))
+				continue;
+			if (ref.isMany()) {
+				Set<Object> set1 = new HashSet<Object>((List)rel1.eGet(ref));
+				Set<Object> set2 = new HashSet<Object>((List)rel2.eGet(ref));
+				if (set1.size() != set2.size())
+					return false;
+				for (Object o : set2) {
+					if (!set1.contains(o))
+						return false;
+				}
+			} else {
+				if (!rel1.eGet(ref).equals(rel2.eGet(ref)))
+					return false;
+			}
+		}
+		return true;
 	}
 
 }
