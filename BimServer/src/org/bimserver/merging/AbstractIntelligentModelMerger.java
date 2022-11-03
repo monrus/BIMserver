@@ -20,9 +20,7 @@ package org.bimserver.merging;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.ifc.ReferenceCounter;
-import org.bimserver.models.ifc4.IfcProject;
-import org.bimserver.models.ifc4.IfcRelationship;
-import org.bimserver.models.ifc4.IfcRoot;
+import org.bimserver.models.ifc4.*;
 import org.bimserver.models.store.Project;
 import org.bimserver.plugins.IfcModelSet;
 import org.bimserver.plugins.ModelHelper;
@@ -62,33 +60,27 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 		referenceCounter = new ReferenceCounter(model);
 		referenceCounter.updateReferences();
 		Map<String, List<IdEObject>> identifierMap = buildIdentifierMap();
-		cleanIdentifierMap(identifierMap);		;
+		cleanIdentifierMap(identifierMap);
+
+		cleanIdenticalRelationships();
+		cleanUnreachableObjects();
+
 		LOGGER.info("Model size: " + model.size());
 		return model;
 	}
 
-	private void removeObjects(Set<IdEObject> referencedObjectsToRemove) {
-		List<Reference> allRefs = referenceCounter.getReferenceMap().values().stream().flatMap(Set::stream).collect(Collectors.toList());
-		List<IdEObject> foundRefs = new ArrayList<>();
-		for (IdEObject obj : referencedObjectsToRemove) {
-			addToRemoveList(obj, foundRefs, allRefs);
-		}
-		referencedObjectsToRemove.addAll(foundRefs);
-		referencedObjectsToRemove.forEach(o -> model.remove(o));
+	private void cleanIdenticalRelationships() {
+		List<IfcRelationship> allRels = model.getAllWithSubTypes(IfcRelationship.class);
+		List<IfcRelationship> relsToDelete = findDuplicateRelsToRemove(allRels);
+		relsToDelete.forEach(r -> model.remove(r));
 	}
 
-
-	void addToRemoveList(IdEObject object, List<IdEObject> refList, List<Reference> allRefs) {
-		List<Reference> refs = allRefs.stream().filter(r -> r.getIdEObject() == object).collect(Collectors.toList());
-		if (refs == null)
-			return;
-		for (Reference reference : refs) {
-			if (!(reference.getReferredObject() instanceof IfcRoot)
-					&& !refList.contains(reference.getReferredObject())) {
-				refList.add(reference.getReferredObject());
-				addToRemoveList(reference.getReferredObject(), refList, allRefs);
-			}
-		}
+	private void cleanUnreachableObjects() {
+		IfcProject proj = model.getAll(IfcProject.class).stream().findFirst().get();
+		Set<IdEObject> reachable = getAllReachableObjectsFrom(proj, false);
+		Collection<IdEObject> allObjects = model.getValues();
+		List<IdEObject> toRemove = allObjects.stream().filter(o -> !reachable.contains(o)).collect(Collectors.toList());
+		toRemove.forEach(o -> model.remove(o));
 	}
 
 	private Map<String, List<IdEObject>> buildIdentifierMap() {
@@ -125,7 +117,6 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 		for (String identifier : identifierMap.keySet()) {
 			List<IdEObject> list = identifierMap.get(identifier);
 			if (list.size() > 1) {
-				Set<IdEObject> referencedObjectsToRemove = new HashSet<>();
 				IdEObject newestObject = list.get(list.size() - 1);
 				// Change all attributes FROM this object
 				for (EAttribute eAttribute : newestObject.eClass().getEAllAttributes()) {
@@ -147,7 +138,7 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 				for (EReference eReference : newestObject.eClass().getEAllReferences()) {
 					if (eReference.isMany()) {
 						// This is strange, in some cases the list can be merged without problems, but we just play "safe" here
-						if (!newestObject.eIsSet(eReference)) {
+						//if (!newestObject.eIsSet(eReference)) {
 							List<?> l = (List<?>)newestObject.eGet(eReference);
 							for (int i = list.size() - 2; i >= 0; i--) {
 								IdEObject olderObject = list.get(i);
@@ -161,15 +152,7 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 									break;
 								}
 							}
-						} else {
-							for (int i = list.size() - 2; i >= 0; i--) {
-								IdEObject olderObject = list.get(i);
-								if (olderObject.eIsSet(eReference)) {
-									List a = (List) olderObject.eGet(eReference);
-									referencedObjectsToRemove.addAll(a);
-								}
-							}
-						}
+						//}
 					} else {
 						if (!newestObject.eIsSet(eReference)) {
 							for (int i = list.size() - 2; i >= 0; i--) {
@@ -180,28 +163,20 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 									break;
 								}
 							}
-						} else {
-							for (int i = list.size() - 2; i >= 0; i--) {
-								IdEObject olderObject = list.get(i);
-								if (olderObject.eIsSet(eReference)) {
-									referencedObjectsToRemove.add((IdEObject) olderObject.eGet(eReference));
-								}
-							}
 						}
 					}
 				}
 				// Change all references TO this object
 				for (IdEObject idEObject : list) {
 					if (idEObject != newestObject) {
-						removeReplaceLinks(newestObject, idEObject, referencedObjectsToRemove);
-						//removeObjects(referencedObjectsToRemove);
+						removeReplaceLinks(newestObject, idEObject);
 					}
 				}
 			}
 		}
 	}
 
-	private void removeReplaceLinks(IdEObject mainObject, IdEObject objectToRemove, Set<IdEObject> objectsToRemove) {
+	private void removeReplaceLinks(IdEObject mainObject, IdEObject objectToRemove) {
 		if (mainObject.eClass() != objectToRemove.eClass()) {
 			throw new RuntimeException("Classes must be the same");
 		}
@@ -211,10 +186,11 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 			Set<Reference> newReferences = new HashSet<Reference>();
 			while (referenceIterator.hasNext()) {
 				Reference reference = referenceIterator.next();
-				if (!objectsToRemove.contains(reference.getIdEObject()))
-					newReferences.add(reference.reAttach(mainObject));
-				else
+				if (reference.geteReference().getName().equals("PartOfPset")) {
 					reference.reAttach(null);
+				} else {
+					newReferences.add(reference.reAttach(mainObject));
+				}
 				referenceIterator.remove();
 			}
 			for (Reference reference : newReferences) {
@@ -270,7 +246,7 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 		return false;
 	}
 
-	public List<IfcRelationship> findDuplicateRelsToRemove(List<IfcRelationship> allRels) throws Exception {
+	public List<IfcRelationship> findDuplicateRelsToRemove(List<IfcRelationship> allRels) {
 		List<IfcRelationship> duplicates = new ArrayList<>();
 		Map<EClass, List<IfcRelationship>> relsTypesMap = new HashMap<>();
 		for (IfcRelationship rel : allRels) {
@@ -308,6 +284,9 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 						return false;
 				}
 			} else {
+				if (rel1.eGet(ref) == null || rel2.eGet(ref) == null) {
+					return false;
+				}
 				if (!rel1.eGet(ref).equals(rel2.eGet(ref)))
 					return false;
 			}

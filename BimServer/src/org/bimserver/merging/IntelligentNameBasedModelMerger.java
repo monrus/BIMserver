@@ -30,7 +30,59 @@ public class IntelligentNameBasedModelMerger extends AbstractIntelligentModelMer
 	@Override
 	public String getIdentifier(IdEObject idEObject) {
 		if (idEObject instanceof IfcRoot) {
-			if (idEObject instanceof IfcGrid) {
+			IfcRoot ifcRoot = (IfcRoot) idEObject;
+			if (idEObject instanceof IfcRelationship) {
+				return null;
+			} else if (idEObject instanceof IfcPropertySetDefinition) {
+				IfcPropertySetDefinition propSet = (IfcPropertySetDefinition)idEObject;
+				if (!propSet.getDefinesOccurrence().isEmpty()) {
+					if (propSet.getDefinesOccurrence().size() == 1)
+						return MessageFormat.format("propSet-{0}-{1}", propSet.getName(), propSet.getDefinesOccurrence().get(0).getName());
+					else
+						throw new RuntimeException("Unsupported merging configuration");
+				} else if (!propSet.getDefinesType().isEmpty()) {
+					if (propSet.getDefinesType().size() == 1)
+						return MessageFormat.format("propSet-{0}-{1}", propSet.getName(), propSet.getDefinesType().get(0).getName());
+					else
+						throw new RuntimeException("Unsupported merging configuration");
+				}
+				throw new RuntimeException("Unsupported merging configuration");
+			} else if (idEObject instanceof IfcProduct) {
+				return ((IfcProduct)idEObject).getGlobalId();
+			} else {
+				if (ifcRoot.getName() == null)
+					return null;
+				else
+					return MessageFormat.format("{0}-{1}", ifcRoot.getName(), ifcRoot.eClass().getName());
+			}
+		}
+		return null;
+	}
+
+	public String getIdentifier3(IdEObject idEObject) {
+		if (idEObject instanceof IfcRoot) {
+			if (idEObject instanceof IfcPropertySet
+					|| idEObject instanceof IfcQuantitySet) {
+				return ((IfcRoot) idEObject).getGlobalId();
+			}/* else if (idEObject instanceof IfcRelDefinesByType) {
+				IfcRelDefinesByType rel = (IfcRelDefinesByType)idEObject;
+				return MessageFormat.format("relDefinesByType-{0}-{1}", rel.getRelatingType().getName(), rel.getRelatingType().eClass().getName());
+			} else if (idEObject instanceof IfcRelAggregates) {
+				IfcRelAggregates rel = (IfcRelAggregates)idEObject;
+				return MessageFormat.format("relAggregates-{0}-{1}", rel.getRelatingObject().getName(), rel.getRelatingObject().eClass().getName());
+			} else if (idEObject instanceof IfcRelContainedInSpatialStructure) {
+				IfcRelContainedInSpatialStructure rel = (IfcRelContainedInSpatialStructure)idEObject;
+				return MessageFormat.format("relContainedInSpatialStructure-{0}-{1}", rel.getRelatingStructure().getName(), rel.getRelatingStructure().eClass().getName());
+			} */else if (idEObject instanceof IfcRelationship) {
+				return null;
+			} else {
+				IfcRoot ifcRoot = (IfcRoot) idEObject;
+				if (ifcRoot.getName() == null)
+					return null;
+				else
+					return MessageFormat.format("{0}-{1}", ifcRoot.getName(), ifcRoot.eClass().getName());
+			}
+			/*if (idEObject instanceof IfcGrid) {
 				IfcGrid grid = (IfcGrid)idEObject;
 				if (grid.isSetContainedInStructure())
 					return MessageFormat.format("{0}-{1}", grid.getName(), grid.getContainedInStructure().stream().map(t -> t.getRelatingStructure().getName()).collect(Collectors.joining()));
@@ -43,7 +95,8 @@ public class IntelligentNameBasedModelMerger extends AbstractIntelligentModelMer
 				IfcPropertySet set = (IfcPropertySet)idEObject;
 				return MessageFormat.format("pset-{0}-{1}", set.getName(), set.getDefinesType().stream().map(t -> t.getName()).collect(Collectors.joining()));
 			} else if (idEObject instanceof IfcRelationship) {
-				if (idEObject instanceof IfcRelAggregates) {
+				return null;*/
+				/*if (idEObject instanceof IfcRelAggregates) {
 					IfcRelAggregates rel = (IfcRelAggregates) idEObject;
 					return MessageFormat.format("rel-{0}-{1}", rel.getRelatingObject().getName(), rel.getRelatedObjects().stream().map(o -> o.getName()).sorted().collect(Collectors.joining(",")));
 				} else if (idEObject instanceof IfcRelDefinesByType) {
@@ -72,16 +125,10 @@ public class IntelligentNameBasedModelMerger extends AbstractIntelligentModelMer
 					return MessageFormat.format("rel-{0}-{1}", rel.getRelatingStructure().getName(), rel.getRelatedElements().stream().map(o -> o.getName()).sorted().collect(Collectors.joining(",")));
 				} else {
 					int i = 0;
-				}
+				}*/
 			} else {
-				IfcRoot ifcRoot = (IfcRoot) idEObject;
-				if (ifcRoot.getName() == null)
-					return null;
-				else
-					return MessageFormat.format("{0}-{1}", ifcRoot.getName(), ifcRoot.eClass().getName());
+				return null;
 			}
-		}
-		return null;
 	}
 
 	public String getIdentifier2(IdEObject idEObject) {
