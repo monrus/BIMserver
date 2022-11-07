@@ -17,9 +17,11 @@ package org.bimserver.merging;
  * along with this program.  If not, see {@literal<http://www.gnu.org/licenses/>}.
  *****************************************************************************/
 
+import com.sun.tools.ws.wsdl.document.Message;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.models.ifc4.*;
 import org.bimserver.shared.Guid;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.text.MessageFormat;
 import java.util.UUID;
@@ -31,31 +33,25 @@ public class IntelligentNameBasedModelMerger extends AbstractIntelligentModelMer
 	public String getIdentifier(IdEObject idEObject) {
 		if (idEObject instanceof IfcRoot) {
 			IfcRoot ifcRoot = (IfcRoot) idEObject;
-			if (idEObject instanceof IfcRelationship) {
+			if (ifcRoot instanceof IfcRelationship)
 				return null;
-			} else if (idEObject instanceof IfcPropertySetDefinition) {
-				IfcPropertySetDefinition propSet = (IfcPropertySetDefinition)idEObject;
-				if (!propSet.getDefinesOccurrence().isEmpty()) {
-					if (propSet.getDefinesOccurrence().size() == 1)
-						return MessageFormat.format("propSet-{0}-{1}", propSet.getName(), propSet.getDefinesOccurrence().get(0).getName());
-					else
-						throw new RuntimeException("Unsupported merging configuration");
-				} else if (!propSet.getDefinesType().isEmpty()) {
-					if (propSet.getDefinesType().size() == 1)
-						return MessageFormat.format("propSet-{0}-{1}", propSet.getName(), propSet.getDefinesType().get(0).getName());
-					else
-						throw new RuntimeException("Unsupported merging configuration");
-				}
-				throw new RuntimeException("Unsupported merging configuration");
-			} else if (idEObject instanceof IfcProduct) {
-				return ((IfcProduct)idEObject).getGlobalId();
-			} else {
-				if (ifcRoot.getName() == null)
-					return null;
-				else
-					return MessageFormat.format("{0}-{1}", ifcRoot.getName(), ifcRoot.eClass().getName());
-			}
-		}
+			if (ifcRoot instanceof IfcQuantitySet || ifcRoot instanceof IfcPropertySet)
+				return ifcRoot.getGlobalId();
+			/*if (ifcRoot instanceof IfcPropertySet) {
+				IfcPropertySet propSet = (IfcPropertySet)ifcRoot;
+				return MessageFormat.format("{0}-{1}", propSet.getName(), propSet.getDefinesType().stream().map(t -> t.getGlobalId()).collect(Collectors.joining()));
+			}*/
+			if (StringUtils.isEmpty(ifcRoot.getName()))
+				return ifcRoot.getGlobalId();
+			else
+				return MessageFormat.format("{0}-{1}", ifcRoot.getName(), ifcRoot.eClass().getName());
+		} else if (idEObject instanceof IfcRepresentationContext) {
+			IfcRepresentationContext context = (IfcRepresentationContext)idEObject;
+			return MessageFormat.format("{0}-{1}", context.getContextIdentifier(), context.getContextType());
+		}/* else if (idEObject instanceof IfcProperty) {
+			IfcProperty prop = (IfcProperty) idEObject;
+			return MessageFormat.format("{0}-{1}", prop.getName(), prop.getPartOfPset().stream().map(ps -> ps.getGlobalId()).collect(Collectors.joining(",")));
+		}*/
 		return null;
 	}
 

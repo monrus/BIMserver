@@ -63,31 +63,43 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 		cleanIdentifierMap(identifierMap);
 
 		cleanIdenticalRelationships();
+		cleanIdenticalPropertySets();
 		cleanUnreachableObjects();
 
 		LOGGER.info("Model size: " + model.size());
 		return model;
 	}
 
-	private void cleanIdenticalRelationships() {
-		List<IfcRelationship> allRels = model.getAllWithSubTypes(IfcRelationship.class);
-		List<IfcRelationship> relsToDelete = findDuplicateRelsToRemove(allRels);
-		relsToDelete.forEach(r -> model.remove(r));
-	}
-
-	private void cleanUnreachableObjects() {
-		IfcProject proj = model.getAll(IfcProject.class).stream().findFirst().get();
-		Set<IdEObject> reachable = getAllReachableObjectsFrom(proj, false);
-		Collection<IdEObject> allObjects = model.getValues();
-		List<IdEObject> toRemove = allObjects.stream().filter(o -> !reachable.contains(o)).collect(Collectors.toList());
-		toRemove.forEach(o -> model.remove(o));
+	private void cleanIdenticalPropertySets() {
+		List<IfcTypeObject> typeObjects = model.getAllWithSubTypes(IfcTypeObject.class);
+		typeObjects.forEach(to -> {
+			Map<String, List<IfcPropertySetDefinition>> map = to.getHasPropertySets().stream().collect(Collectors.groupingBy(IfcPropertySetDefinition::getName));
+			map.entrySet().forEach(es -> {
+					for (int i = 1; i < es.getValue().size(); i++) {
+						es.getValue().get(i).unsetDefinesType();
+						model.remove(es.getValue().get(i));
+					}
+			});
+		});
+		List<IfcObject> objects = model.getAllWithSubTypes(IfcObject.class);
+		objects.forEach(o -> {
+			Map<String, List<IfcPropertySetDefinition>> map = o.getIsDefinedBy().stream().map(rel -> (IfcPropertySetDefinition)rel.getRelatingPropertyDefinition()).collect(Collectors.groupingBy(IfcPropertySetDefinition::getName));
+			map.entrySet().forEach(es -> {
+				for (int i = 1; i < es.getValue().size(); i++) {
+					es.getValue().get(i).getDefinesOccurrence().forEach(rel -> model.remove(rel));
+					es.getValue().get(i).unsetDefinesOccurrence();
+					model.remove(es.getValue().get(i));
+				}
+			});
+		});
 	}
 
 	private Map<String, List<IdEObject>> buildIdentifierMap() {
-		Map<String, List<IdEObject>> map = new HashMap<>();
+		Map<String, List<IdEObject>> map = new HashMap<String, List<IdEObject>>();
 		for (IdEObject idEObject : model.getValues()) {
-			if (idEObject instanceof IfcRoot) {
-				IfcRoot ifcRoot = (IfcRoot) idEObject;
+			//if (idEObject instanceof IfcRoot) {
+				//IfcRoot ifcRoot = (IfcRoot) idEObject;
+				IdEObject ifcRoot = idEObject;
 				String identifier = getIdentifier(idEObject);
 				if (identifier != null) {
 					if (map.containsKey(identifier)) {
@@ -107,7 +119,7 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 						}
 					}
 				}
-			}
+			//}
 		}
 		return map;
 	}
@@ -139,19 +151,19 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 					if (eReference.isMany()) {
 						// This is strange, in some cases the list can be merged without problems, but we just play "safe" here
 						//if (!newestObject.eIsSet(eReference)) {
-							List<?> l = (List<?>)newestObject.eGet(eReference);
-							for (int i = list.size() - 2; i >= 0; i--) {
-								IdEObject olderObject = list.get(i);
-								if (olderObject.eIsSet(eReference)) {
-									List a = (List) olderObject.eGet(eReference);
-									l.addAll(a);
-									for (Object o : a) {
-										referenceCounter.addReference(new ReferenceCounter.MultiReference(newestObject, (IdEObject) o, eReference));
-									}
-									a.clear();
-									break;
+						List<?> l = (List<?>)newestObject.eGet(eReference);
+						for (int i = list.size() - 2; i >= 0; i--) {
+							IdEObject olderObject = list.get(i);
+							if (olderObject.eIsSet(eReference)) {
+								List a = (List) olderObject.eGet(eReference);
+								l.addAll(a);
+								for (Object o : a) {
+									referenceCounter.addReference(new ReferenceCounter.MultiReference(newestObject, (IdEObject) o, eReference));
 								}
+								a.clear();
+								break;
 							}
+						}
 						//}
 					} else {
 						if (!newestObject.eIsSet(eReference)) {
@@ -186,11 +198,7 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 			Set<Reference> newReferences = new HashSet<Reference>();
 			while (referenceIterator.hasNext()) {
 				Reference reference = referenceIterator.next();
-				if (reference.geteReference().getName().equals("PartOfPset")) {
-					reference.reAttach(null);
-				} else {
-					newReferences.add(reference.reAttach(mainObject));
-				}
+				newReferences.add(reference.reAttach(mainObject));
 				referenceIterator.remove();
 			}
 			for (Reference reference : newReferences) {
@@ -200,6 +208,20 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 //		LOGGER.info("Removing " + objectToRemove);
 		referenceCounter.remove(objectToRemove);
 		model.remove(objectToRemove);
+	}
+
+	private void cleanIdenticalRelationships() {
+		List<IfcRelationship> allRels = model.getAllWithSubTypes(IfcRelationship.class);
+		List<IfcRelationship> relsToDelete = findDuplicateRelsToRemove(allRels);
+		relsToDelete.forEach(r -> model.remove(r));
+	}
+
+	private void cleanUnreachableObjects() {
+		IfcProject proj = model.getAll(IfcProject.class).stream().findFirst().get();
+		Set<IdEObject> reachable = getAllReachableObjectsFrom(proj, false);
+		Collection<IdEObject> allObjects = model.getValues();
+		List<IdEObject> toRemove = allObjects.stream().filter(o -> !reachable.contains(o)).collect(Collectors.toList());
+		toRemove.forEach(o -> model.remove(o));
 	}
 
 	public Set<IdEObject> getAllReachableObjectsFrom(IdEObject object, boolean stopTraversalOnFindingProject){
@@ -240,7 +262,7 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 //		for (EAttribute eAttribute : object.eClass().getEAllAttributes()) {
 //			Object o = object.eGet(eAttribute);
 //			if (o instanceof IdEObject){
-//				
+//
 //			}
 //		}
 		return false;
@@ -293,5 +315,7 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 		}
 		return true;
 	}
+
+
 
 }
