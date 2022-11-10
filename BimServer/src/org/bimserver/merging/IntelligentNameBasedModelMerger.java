@@ -37,10 +37,6 @@ public class IntelligentNameBasedModelMerger extends AbstractIntelligentModelMer
 				return null;
 			if (ifcRoot instanceof IfcQuantitySet || ifcRoot instanceof IfcPropertySet)
 				return ifcRoot.getGlobalId();
-			/*if (ifcRoot instanceof IfcPropertySet) {
-				IfcPropertySet propSet = (IfcPropertySet)ifcRoot;
-				return MessageFormat.format("{0}-{1}", propSet.getName(), propSet.getDefinesType().stream().map(t -> t.getGlobalId()).collect(Collectors.joining()));
-			}*/
 			if (StringUtils.isEmpty(ifcRoot.getName()))
 				return ifcRoot.getGlobalId();
 			else
