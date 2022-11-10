@@ -299,10 +299,17 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 			if (ref.isMany()) {
 				Set<Object> set1 = new HashSet<Object>((List)rel1.eGet(ref));
 				Set<Object> set2 = new HashSet<Object>((List)rel2.eGet(ref));
-				if (set1.size() != set2.size())
-					return false;
-				for (Object o : set2) {
-					if (!set1.contains(o))
+				Set<Object> shortSet, longSet;
+				if (set1.size() < set2.size()) {
+					shortSet = set1;
+					longSet = set2;
+				} else {
+					shortSet = set2;
+					longSet = set1;
+				}
+
+				for (Object o : shortSet) {
+					if (!longSet.contains(o))
 						return false;
 				}
 			} else {
