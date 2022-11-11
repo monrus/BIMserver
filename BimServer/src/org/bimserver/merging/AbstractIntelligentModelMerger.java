@@ -270,28 +270,44 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 
 	public List<IfcRelationship> findDuplicateRelsToRemove(List<IfcRelationship> allRels) {
 		List<IfcRelationship> duplicates = new ArrayList<>();
-		Map<EClass, List<IfcRelationship>> relsTypesMap = new HashMap<>();
-		for (IfcRelationship rel : allRels) {
-			if (!relsTypesMap.containsKey(rel.eClass()))
-				relsTypesMap.put(rel.eClass(), new ArrayList<>());
-			relsTypesMap.get(rel.eClass()).add(rel);
-		}
+
+		Map<EClass, Map<Object, List<IfcRelationship>>> relsTypesMap = allRels.stream()
+				.collect(Collectors.groupingBy(IfcRelationship::eClass,
+						Collectors.groupingBy(this::getMainRelating
+						)));
 
 		for (EClass eClass : relsTypesMap.keySet()) {
-			List<IfcRelationship> rels = relsTypesMap.get(eClass);
-			for (int i = 0; i < rels.size(); i++){
-				for (int j = i+1; j < rels.size(); j++){
-					if (isEqualsIfcRelationships(rels.get(i), rels.get(j)))
-						duplicates.add(rels.get(j));
+			Map<Object, List<IfcRelationship>> objectSetMap = relsTypesMap.get(eClass);
+			for (Object o : objectSetMap.keySet()){
+				if (objectSetMap.get(o).size() > 0){
+					List<IfcRelationship> rels = objectSetMap.get(o);
+					for (int i = 0; i < rels.size(); i++){
+						for (int j = i+1; j < rels.size(); j++){
+							Optional<IfcRelationship> optional = isEqualsIfcRelationships(rels.get(i), rels.get(j));
+							if (optional.isPresent())
+								duplicates.add(optional.get());
+						}
+					}
 				}
 			}
 		}
 		return duplicates;
 	}
 
-	private boolean isEqualsIfcRelationships(IfcRelationship rel1, IfcRelationship rel2) {
+	private Object getMainRelating(IfcRelationship rel) {
+		List<EReference> refs = rel.eClass().getEAllReferences().stream().filter(r->!r.isMany()).collect(Collectors.toList());
+		for (EReference ref : refs) {
+			if (ref.getName().equals("OwnerHistory"))
+				continue;
+			return rel.eGet(ref);
+		}
+		return rel.getOwnerHistory();
+	}
+
+	private Optional<IfcRelationship> isEqualsIfcRelationships(IfcRelationship rel1, IfcRelationship rel2) {
 		if (!rel1.eClass().equals(rel2.eClass()))
-			return false;
+			return Optional.empty();
+		IfcRelationship duplicate = rel2;
 		EList<EReference> refs = rel1.eClass().getEAllReferences();
 		for (EReference ref : refs) {
 			if (ref.getName().equals("OwnerHistory"))
@@ -303,25 +319,28 @@ public abstract class AbstractIntelligentModelMerger extends AbstractModelMerger
 				if (set1.size() < set2.size()) {
 					shortSet = set1;
 					longSet = set2;
+					duplicate = rel1;
 				} else {
 					shortSet = set2;
 					longSet = set1;
+					duplicate = rel2;
 				}
 
 				for (Object o : shortSet) {
 					if (!longSet.contains(o))
-						return false;
+						return Optional.empty();
 				}
 			} else {
 				if (rel1.eGet(ref) == null || rel2.eGet(ref) == null) {
-					return false;
+					return Optional.empty();
 				}
 				if (!rel1.eGet(ref).equals(rel2.eGet(ref)))
-					return false;
+					return Optional.empty();
 			}
 		}
-		return true;
+		return Optional.of(duplicate);
 	}
+
 
 
 
