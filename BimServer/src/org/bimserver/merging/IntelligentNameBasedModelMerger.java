@@ -33,9 +33,14 @@ public class IntelligentNameBasedModelMerger extends AbstractIntelligentModelMer
 	public String getIdentifier(IdEObject idEObject) {
 		if (idEObject instanceof IfcRoot) {
 			IfcRoot ifcRoot = (IfcRoot) idEObject;
-			if (ifcRoot instanceof IfcRelationship)
-				return null;
-			if (ifcRoot instanceof IfcQuantitySet || ifcRoot instanceof IfcPropertySet)
+			if (ifcRoot instanceof IfcRelationship) {
+				if (ifcRoot instanceof IfcRelDefinesByType) {
+					IfcRelDefinesByType rel = (IfcRelDefinesByType)ifcRoot;
+					return MessageFormat.format("relType-{0}-{1}", rel.getRelatingType().getName(), rel.getRelatingType().eClass().getName());
+				}
+				else
+					return null;
+			} else if (ifcRoot instanceof IfcQuantitySet || ifcRoot instanceof IfcPropertySet)
 				return ifcRoot.getGlobalId();
 			if (StringUtils.isEmpty(ifcRoot.getName()))
 				return ifcRoot.getGlobalId();
@@ -43,11 +48,20 @@ public class IntelligentNameBasedModelMerger extends AbstractIntelligentModelMer
 				return MessageFormat.format("{0}-{1}", ifcRoot.getName(), ifcRoot.eClass().getName());
 		} else if (idEObject instanceof IfcRepresentationContext) {
 			IfcRepresentationContext context = (IfcRepresentationContext)idEObject;
-			return MessageFormat.format("{0}-{1}", context.getContextIdentifier(), context.getContextType());
-		}/* else if (idEObject instanceof IfcProperty) {
-			IfcProperty prop = (IfcProperty) idEObject;
-			return MessageFormat.format("{0}-{1}", prop.getName(), prop.getPartOfPset().stream().map(ps -> ps.getGlobalId()).collect(Collectors.joining(",")));
-		}*/
+			return MessageFormat.format("IfcRepresentationContext-{0}-{1}", context.getContextIdentifier(), context.getContextType());
+		} else if (idEObject instanceof IfcGridAxis) {
+			IfcGridAxis gridAxis = (IfcGridAxis)idEObject;
+			return MessageFormat.format("IfcGridAxis-{0}-{1}-{2}-{3}", gridAxis.getAxisTag(),
+					gridAxis.getPartOfU().stream().map(ga -> ga.getName()).collect(Collectors.joining(",")),
+					gridAxis.getPartOfV().stream().map(ga -> ga.getName()).collect(Collectors.joining(",")),
+					gridAxis.getPartOfW().stream().map(ga -> ga.getName()).collect(Collectors.joining(",")));
+		} else if (idEObject instanceof IfcLibraryInformation) {
+			IfcLibraryInformation libInfo = (IfcLibraryInformation)idEObject;
+			return MessageFormat.format("IfcLibraryInformation-{0}-{1}", libInfo.getName());
+		} else if (idEObject instanceof IfcExternalReference) {
+			IfcExternalReference ref = (IfcExternalReference)idEObject;
+			return MessageFormat.format("IfcExternalReference-{0}-{1}", ref.getLocation(), ref.getName());
+		}
 		return null;
 	}
 
