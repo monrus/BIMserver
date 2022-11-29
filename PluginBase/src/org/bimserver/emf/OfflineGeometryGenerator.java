@@ -217,6 +217,7 @@ public class OfflineGeometryGenerator {
 					DoubleBuffer verticesAsDouble = geometry.getVertices().order(ByteOrder.LITTLE_ENDIAN).asDoubleBuffer();
 
 					for (int i = 0; i < geometry.getNrIndices(); i++) {
+						processExtendsUntranslated(geometryInfo, geometry.getVertices().asDoubleBuffer(), indicesAsInt.get(i) * 3, null);
 						processExtends(geometryInfo, tranformationMatrix, verticesAsDouble, indicesAsInt.get(i) * 3, null);
 					}
 
@@ -452,6 +453,30 @@ public class OfflineGeometryGenerator {
 		bounds.getMax().setY(Math.max(y, bounds.getMax().getY()));
 		bounds.getMax().setZ(Math.max(z, bounds.getMax().getZ()));
 
+		if (generateGeometryResult != null) {
+			generateGeometryResult.getMinBounds().setX(Math.min(x, generateGeometryResult.getMinBounds().getX()));
+			generateGeometryResult.getMinBounds().setY(Math.min(y, generateGeometryResult.getMinBounds().getY()));
+			generateGeometryResult.getMinBounds().setZ(Math.min(z, generateGeometryResult.getMinBounds().getZ()));
+			generateGeometryResult.getMaxBounds().setX(Math.max(x, generateGeometryResult.getMaxBounds().getX()));
+			generateGeometryResult.getMaxBounds().setY(Math.max(y, generateGeometryResult.getMaxBounds().getY()));
+			generateGeometryResult.getMaxBounds().setZ(Math.max(z, generateGeometryResult.getMaxBounds().getZ()));
+		}
+	}
+
+	private void processExtendsUntranslated(GeometryInfo geometryInfo, DoubleBuffer vertices, int index, GenerateGeometryResult generateGeometryResult) throws BimserverDatabaseException {
+		double x = vertices.get(index);
+		double y = vertices.get(index + 1);
+		double z = vertices.get(index + 2);
+
+		Vector3f minBounds = geometryInfo.getBoundsUntransformed().getMin();
+		Vector3f maxBounds = geometryInfo.getBoundsUntransformed().getMax();
+
+		minBounds.setX(Math.min(x, minBounds.getX()));
+		minBounds.setY(Math.min(y, minBounds.getY()));
+		minBounds.setZ(Math.min(z, minBounds.getZ()));
+		maxBounds.setX(Math.max(x, maxBounds.getX()));
+		maxBounds.setY(Math.max(y, maxBounds.getY()));
+		maxBounds.setZ(Math.max(z, maxBounds.getZ()));
 		if (generateGeometryResult != null) {
 			generateGeometryResult.getMinBounds().setX(Math.min(x, generateGeometryResult.getMinBounds().getX()));
 			generateGeometryResult.getMinBounds().setY(Math.min(y, generateGeometryResult.getMinBounds().getY()));
