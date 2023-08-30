@@ -199,7 +199,6 @@ public class DatabaseSession implements LazyLoader, OidProvider, DatabaseInterfa
 		if (operationType == OperationType.READ_ONLY) {
 			throw new BimserverDatabaseException("Cannot commit READ_ONLY DatabaseSession");
 		}
-		try {
 			if (progressHandler != null) {
 				progressHandler.progress(0, objectsToCommit == null ? 0 : objectsToCommit.size());
 			}
@@ -260,11 +259,6 @@ public class DatabaseSession implements LazyLoader, OidProvider, DatabaseInterfa
 				}
 				postCommitActions = null;
 			}
-		} catch (BimserverDatabaseException e) {
-			throw e;
-		} catch (ServiceException e) {
-			throw e;
-		}
 	}
 
 	private void processPossibleIndices(ByteBuffer keyBuffer, int pid, int rid, long oid, EClass eClass, ByteBuffer valueBuffer) throws BimserverLockConflictException, BimserverDatabaseException {
@@ -774,11 +768,15 @@ public class DatabaseSession implements LazyLoader, OidProvider, DatabaseInterfa
 			try {
 				T result = action.execute();
 				if ((objectsToCommit != null && objectsToCommit.size() > 0) || (objectsToDelete != null && objectsToDelete.size() > 0)) {
+					LOGGER.debug(result.getClass().getName() + " -> executeAndCommitAction -> commit");
 					commit(progressHandler);
+				}
+				else {
+					LOGGER.warn(result.getClass().getName() + " -> _ NO _ executeAndCommitAction -> commit");
 				}
 				return result;
 			} catch (BimserverConcurrentModificationDatabaseException e) {
-				LOGGER.debug("BimserverConcurrentModificationDatabaseException", e);
+				LOGGER.error("BimserverConcurrentModificationDatabaseException: "+ e.getMessage());
 				if (progressHandler != null) {
 					progressHandler.retry(i + 1);
 				}
@@ -792,12 +790,14 @@ public class DatabaseSession implements LazyLoader, OidProvider, DatabaseInterfa
 				objectsToCommit = null;
 				startOids = null;
 				if (bimTransaction != null) {
+					LOGGER.debug("bimTransaction is NOT null");
 					bimTransaction = database.getKeyValueStore().startTransaction();
 				} else {
+					LOGGER.debug("bimTransaction is null");
 					// No transaction used, no transactional rollback available/executed, but we still might have to clean up some stuff, see rollback listener
 				}
 			} catch (BimserverLockConflictException e) {
-				LOGGER.info("BimserverLockConflictException");
+				LOGGER.error("BimserverLockConflictException: "+ e.getMessage());
 				bimTransaction.rollback();
 				objectCache.clear();
 				objectsToCommit = null;
@@ -821,12 +821,13 @@ public class DatabaseSession implements LazyLoader, OidProvider, DatabaseInterfa
 					}
 				}
 			} catch (UncheckedBimserverLockConflictException e) {
-				LOGGER.info("UncheckedBimserverLockConflictException");
+				LOGGER.error("UncheckedBimserverLockConflictException: "+ e.getMessage());
 				bimTransaction.rollback();
 				objectCache.clear();
 				objectsToCommit = null;
 				bimTransaction = database.getKeyValueStore().startTransaction();
 			} catch (BimserverDatabaseException e) {
+				LOGGER.error("BimserverDatabaseException: "+ e.getMessage());
 				this.error = true;
 				bimTransaction.rollback();
 				if (cleanupListener != null) {
@@ -835,8 +836,10 @@ public class DatabaseSession implements LazyLoader, OidProvider, DatabaseInterfa
 				throw e;
 			} catch (ServiceException e) {
 				if (e instanceof UserException) {
+					LOGGER.error("UserException: "+ e.getMessage());
 					throw ((UserException) e);
 				} else if (e instanceof ServerException) {
+					LOGGER.error("ServerException: "+ e.getMessage());
 					throw ((ServerException) e);
 				} else {
 					LOGGER.error("", e);
