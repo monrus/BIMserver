@@ -7,11 +7,8 @@
 	<parent>
 		<groupId>org.opensourcebim</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.5.183-SNAPSHOT</version>
+		<version>1.5.185-SNAPSHOT</version>
 	</parent>
-	<properties>
-		<jetty.version>9.4.38.v20210224</jetty.version>
-	</properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -67,7 +64,7 @@
 		<dependency>
 			<groupId>org.opensourcebim</groupId>
 			<artifactId>bimserver</artifactId>
-			<version>1.5.183-SNAPSHOT</version>
+			<version>1.5.185-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -97,7 +94,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
-			<version>1.1.9</version>
+			<version>1.2.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -107,7 +104,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.9</version>
+			<version>1.2.0</version>
 		</dependency>
 	</dependencies>
 	<licenses>
