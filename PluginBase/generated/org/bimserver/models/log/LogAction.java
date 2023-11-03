@@ -93,12 +93,12 @@ public interface LogAction extends IdEObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Executor</em>' reference.
-	 * @see #setExecutor(store.User)
+	 * @see #setExecutor(User)
 	 * @see org.bimserver.models.log.LogPackage#getLogAction_Executor()
 	 * @model
 	 * @generated
 	 */
-	store.User getExecutor();
+	User getExecutor();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.LogAction#getExecutor <em>Executor</em>}' reference.
@@ -108,7 +108,7 @@ public interface LogAction extends IdEObject {
 	 * @see #getExecutor()
 	 * @generated
 	 */
-	void setExecutor(store.User value);
+	void setExecutor(User value);
 
 	/**
 	 * Returns the value of the '<em><b>Access Method</b></em>' attribute.

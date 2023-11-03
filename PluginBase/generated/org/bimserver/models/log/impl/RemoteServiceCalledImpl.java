@@ -84,8 +84,8 @@ public class RemoteServiceCalledImpl extends LogActionImpl implements RemoteServ
 	 * @generated
 	 */
 	@Override
-	public store.Service getService() {
-		return (store.Service) eGet(LogPackage.Literals.REMOTE_SERVICE_CALLED__SERVICE, true);
+	public Service getService() {
+		return (Service) eGet(LogPackage.Literals.REMOTE_SERVICE_CALLED__SERVICE, true);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class RemoteServiceCalledImpl extends LogActionImpl implements RemoteServ
 	 * @generated
 	 */
 	@Override
-	public void setService(store.Service newService) {
+	public void setService(Service newService) {
 		eSet(LogPackage.Literals.REMOTE_SERVICE_CALLED__SERVICE, newService);
 	}
 
@@ -104,8 +104,8 @@ public class RemoteServiceCalledImpl extends LogActionImpl implements RemoteServ
 	 * @generated
 	 */
 	@Override
-	public store.NotifictionResultEnum getState() {
-		return (store.NotifictionResultEnum) eGet(LogPackage.Literals.REMOTE_SERVICE_CALLED__STATE, true);
+	public NotifictionResultEnum getState() {
+		return (NotifictionResultEnum) eGet(LogPackage.Literals.REMOTE_SERVICE_CALLED__STATE, true);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class RemoteServiceCalledImpl extends LogActionImpl implements RemoteServ
 	 * @generated
 	 */
 	@Override
-	public void setState(store.NotifictionResultEnum newState) {
+	public void setState(NotifictionResultEnum newState) {
 		eSet(LogPackage.Literals.REMOTE_SERVICE_CALLED__STATE, newState);
 	}
 

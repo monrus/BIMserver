@@ -54,7 +54,7 @@ import org.bimserver.models.store.User;
 public interface UserRelated extends LogAction {
 	/**
 	 * Returns the value of the '<em><b>User</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link store.User#getLogs <em>Logs</em>}'.
+	 * It is bidirectional and its opposite is '{@link User#getLogs <em>Logs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>User</em>' reference isn't clear,
@@ -62,13 +62,13 @@ public interface UserRelated extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>User</em>' reference.
-	 * @see #setUser(store.User)
+	 * @see #setUser(User)
 	 * @see org.bimserver.models.log.LogPackage#getUserRelated_User()
-	 * @see store.User#getLogs
+	 * @see User#getLogs
 	 * @model opposite="logs"
 	 * @generated
 	 */
-	store.User getUser();
+	User getUser();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.UserRelated#getUser <em>User</em>}' reference.
@@ -78,6 +78,6 @@ public interface UserRelated extends LogAction {
 	 * @see #getUser()
 	 * @generated
 	 */
-	void setUser(store.User value);
+	void setUser(User value);
 
 } // UserRelated

@@ -63,12 +63,12 @@ public interface ExtendedDataAddedToProject extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Project</em>' reference.
-	 * @see #setProject(store.Project)
+	 * @see #setProject(Project)
 	 * @see org.bimserver.models.log.LogPackage#getExtendedDataAddedToProject_Project()
 	 * @model
 	 * @generated
 	 */
-	store.Project getProject();
+	Project getProject();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.ExtendedDataAddedToProject#getProject <em>Project</em>}' reference.
@@ -78,7 +78,7 @@ public interface ExtendedDataAddedToProject extends LogAction {
 	 * @see #getProject()
 	 * @generated
 	 */
-	void setProject(store.Project value);
+	void setProject(Project value);
 
 	/**
 	 * Returns the value of the '<em><b>Extended Data</b></em>' reference.
@@ -89,12 +89,12 @@ public interface ExtendedDataAddedToProject extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Extended Data</em>' reference.
-	 * @see #setExtendedData(store.ExtendedData)
+	 * @see #setExtendedData(ExtendedData)
 	 * @see org.bimserver.models.log.LogPackage#getExtendedDataAddedToProject_ExtendedData()
 	 * @model
 	 * @generated
 	 */
-	store.ExtendedData getExtendedData();
+	ExtendedData getExtendedData();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.ExtendedDataAddedToProject#getExtendedData <em>Extended Data</em>}' reference.
@@ -104,6 +104,6 @@ public interface ExtendedDataAddedToProject extends LogAction {
 	 * @see #getExtendedData()
 	 * @generated
 	 */
-	void setExtendedData(store.ExtendedData value);
+	void setExtendedData(ExtendedData value);
 
 } // ExtendedDataAddedToProject

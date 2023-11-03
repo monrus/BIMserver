@@ -113,8 +113,8 @@ public class LogActionImpl extends IdEObjectImpl implements LogAction {
 	 * @generated
 	 */
 	@Override
-	public store.User getExecutor() {
-		return (store.User) eGet(LogPackage.Literals.LOG_ACTION__EXECUTOR, true);
+	public User getExecutor() {
+		return (User) eGet(LogPackage.Literals.LOG_ACTION__EXECUTOR, true);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class LogActionImpl extends IdEObjectImpl implements LogAction {
 	 * @generated
 	 */
 	@Override
-	public void setExecutor(store.User newExecutor) {
+	public void setExecutor(User newExecutor) {
 		eSet(LogPackage.Literals.LOG_ACTION__EXECUTOR, newExecutor);
 	}
 

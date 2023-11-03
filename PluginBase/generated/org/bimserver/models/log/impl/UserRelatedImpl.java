@@ -77,8 +77,8 @@ public class UserRelatedImpl extends LogActionImpl implements UserRelated {
 	 * @generated
 	 */
 	@Override
-	public store.User getUser() {
-		return (store.User) eGet(LogPackage.Literals.USER_RELATED__USER, true);
+	public User getUser() {
+		return (User) eGet(LogPackage.Literals.USER_RELATED__USER, true);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class UserRelatedImpl extends LogActionImpl implements UserRelated {
 	 * @generated
 	 */
 	@Override
-	public void setUser(store.User newUser) {
+	public void setUser(User newUser) {
 		eSet(LogPackage.Literals.USER_RELATED__USER, newUser);
 	}
 

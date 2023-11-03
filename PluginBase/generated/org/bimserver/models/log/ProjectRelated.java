@@ -54,7 +54,7 @@ import org.bimserver.models.store.Project;
 public interface ProjectRelated extends LogAction {
 	/**
 	 * Returns the value of the '<em><b>Project</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link store.Project#getLogs <em>Logs</em>}'.
+	 * It is bidirectional and its opposite is '{@link Project#getLogs <em>Logs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Project</em>' reference isn't clear,
@@ -62,13 +62,13 @@ public interface ProjectRelated extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Project</em>' reference.
-	 * @see #setProject(store.Project)
+	 * @see #setProject(Project)
 	 * @see org.bimserver.models.log.LogPackage#getProjectRelated_Project()
-	 * @see store.Project#getLogs
+	 * @see Project#getLogs
 	 * @model opposite="logs"
 	 * @generated
 	 */
-	store.Project getProject();
+	Project getProject();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.ProjectRelated#getProject <em>Project</em>}' reference.
@@ -78,6 +78,6 @@ public interface ProjectRelated extends LogAction {
 	 * @see #getProject()
 	 * @generated
 	 */
-	void setProject(store.Project value);
+	void setProject(Project value);
 
 } // ProjectRelated

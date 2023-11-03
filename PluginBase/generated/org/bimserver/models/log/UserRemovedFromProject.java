@@ -61,12 +61,12 @@ public interface UserRemovedFromProject extends UserRelated {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Project</em>' reference.
-	 * @see #setProject(store.Project)
+	 * @see #setProject(Project)
 	 * @see org.bimserver.models.log.LogPackage#getUserRemovedFromProject_Project()
 	 * @model
 	 * @generated
 	 */
-	store.Project getProject();
+	Project getProject();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.UserRemovedFromProject#getProject <em>Project</em>}' reference.
@@ -76,6 +76,6 @@ public interface UserRemovedFromProject extends UserRelated {
 	 * @see #getProject()
 	 * @generated
 	 */
-	void setProject(store.Project value);
+	void setProject(Project value);
 
 } // UserRemovedFromProject

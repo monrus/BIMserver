@@ -68,12 +68,12 @@ public interface RemoteServiceCalled extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Service</em>' reference.
-	 * @see #setService(store.Service)
+	 * @see #setService(Service)
 	 * @see org.bimserver.models.log.LogPackage#getRemoteServiceCalled_Service()
 	 * @model
 	 * @generated
 	 */
-	store.Service getService();
+	Service getService();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.RemoteServiceCalled#getService <em>Service</em>}' reference.
@@ -83,11 +83,11 @@ public interface RemoteServiceCalled extends LogAction {
 	 * @see #getService()
 	 * @generated
 	 */
-	void setService(store.Service value);
+	void setService(Service value);
 
 	/**
 	 * Returns the value of the '<em><b>State</b></em>' attribute.
-	 * The literals are from the enumeration {@link store.NotifictionResultEnum}.
+	 * The literals are from the enumeration {@link NotifictionResultEnum}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>State</em>' attribute isn't clear,
@@ -95,24 +95,24 @@ public interface RemoteServiceCalled extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>State</em>' attribute.
-	 * @see store.NotifictionResultEnum
-	 * @see #setState(store.NotifictionResultEnum)
+	 * @see NotifictionResultEnum
+	 * @see #setState(NotifictionResultEnum)
 	 * @see org.bimserver.models.log.LogPackage#getRemoteServiceCalled_State()
 	 * @model
 	 * @generated
 	 */
-	store.NotifictionResultEnum getState();
+	NotifictionResultEnum getState();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.RemoteServiceCalled#getState <em>State</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>State</em>' attribute.
-	 * @see store.NotifictionResultEnum
+	 * @see NotifictionResultEnum
 	 * @see #getState()
 	 * @generated
 	 */
-	void setState(store.NotifictionResultEnum value);
+	void setState(NotifictionResultEnum value);
 
 	/**
 	 * Returns the value of the '<em><b>Percentage</b></em>' attribute.
