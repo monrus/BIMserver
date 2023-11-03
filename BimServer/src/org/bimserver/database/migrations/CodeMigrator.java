@@ -107,7 +107,7 @@ public class CodeMigrator {
 		int latestVersion = migrator.getLatestVersion();
 		LOGGER.info("Migrating to version " + latestVersion);
 		Schema schema = migrator.migrateSchemaTo(latestVersion);
-		schema.writeToEcore(new File("models/models.ecore"));
+		schema.writeToEcore(new File("BimServer/models/models.ecore"));
 		LOGGER.info("Model migrated to version " + latestVersion);
 
 		LOGGER.info("Generating ServiceInterface objects...");

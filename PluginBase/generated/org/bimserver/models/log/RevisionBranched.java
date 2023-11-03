@@ -62,12 +62,12 @@ public interface RevisionBranched extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Oldrevision</em>' reference.
-	 * @see #setOldrevision(Revision)
+	 * @see #setOldrevision(store.Revision)
 	 * @see org.bimserver.models.log.LogPackage#getRevisionBranched_Oldrevision()
 	 * @model
 	 * @generated
 	 */
-	Revision getOldrevision();
+	store.Revision getOldrevision();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.RevisionBranched#getOldrevision <em>Oldrevision</em>}' reference.
@@ -77,7 +77,7 @@ public interface RevisionBranched extends LogAction {
 	 * @see #getOldrevision()
 	 * @generated
 	 */
-	void setOldrevision(Revision value);
+	void setOldrevision(store.Revision value);
 
 	/**
 	 * Returns the value of the '<em><b>Newrevision</b></em>' reference.
@@ -88,12 +88,12 @@ public interface RevisionBranched extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Newrevision</em>' reference.
-	 * @see #setNewrevision(Revision)
+	 * @see #setNewrevision(store.Revision)
 	 * @see org.bimserver.models.log.LogPackage#getRevisionBranched_Newrevision()
 	 * @model
 	 * @generated
 	 */
-	Revision getNewrevision();
+	store.Revision getNewrevision();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.RevisionBranched#getNewrevision <em>Newrevision</em>}' reference.
@@ -103,6 +103,6 @@ public interface RevisionBranched extends LogAction {
 	 * @see #getNewrevision()
 	 * @generated
 	 */
-	void setNewrevision(Revision value);
+	void setNewrevision(store.Revision value);
 
 } // RevisionBranched

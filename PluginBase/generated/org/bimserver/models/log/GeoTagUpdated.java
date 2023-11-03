@@ -61,12 +61,12 @@ public interface GeoTagUpdated extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Geo Tag</em>' reference.
-	 * @see #setGeoTag(GeoTag)
+	 * @see #setGeoTag(store.GeoTag)
 	 * @see org.bimserver.models.log.LogPackage#getGeoTagUpdated_GeoTag()
 	 * @model
 	 * @generated
 	 */
-	GeoTag getGeoTag();
+	store.GeoTag getGeoTag();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.GeoTagUpdated#getGeoTag <em>Geo Tag</em>}' reference.
@@ -76,6 +76,6 @@ public interface GeoTagUpdated extends LogAction {
 	 * @see #getGeoTag()
 	 * @generated
 	 */
-	void setGeoTag(GeoTag value);
+	void setGeoTag(store.GeoTag value);
 
 } // GeoTagUpdated

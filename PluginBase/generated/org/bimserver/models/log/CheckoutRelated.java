@@ -54,7 +54,7 @@ import org.bimserver.models.store.Checkout;
 public interface CheckoutRelated extends LogAction {
 	/**
 	 * Returns the value of the '<em><b>Checkout</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.bimserver.models.store.Checkout#getLogs <em>Logs</em>}'.
+	 * It is bidirectional and its opposite is '{@link store.Checkout#getLogs <em>Logs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Checkout</em>' reference isn't clear,
@@ -62,13 +62,13 @@ public interface CheckoutRelated extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Checkout</em>' reference.
-	 * @see #setCheckout(Checkout)
+	 * @see #setCheckout(store.Checkout)
 	 * @see org.bimserver.models.log.LogPackage#getCheckoutRelated_Checkout()
-	 * @see org.bimserver.models.store.Checkout#getLogs
+	 * @see store.Checkout#getLogs
 	 * @model opposite="logs"
 	 * @generated
 	 */
-	Checkout getCheckout();
+	store.Checkout getCheckout();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.CheckoutRelated#getCheckout <em>Checkout</em>}' reference.
@@ -78,6 +78,6 @@ public interface CheckoutRelated extends LogAction {
 	 * @see #getCheckout()
 	 * @generated
 	 */
-	void setCheckout(Checkout value);
+	void setCheckout(store.Checkout value);
 
 } // CheckoutRelated

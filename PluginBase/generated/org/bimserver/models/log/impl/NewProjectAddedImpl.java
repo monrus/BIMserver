@@ -76,8 +76,9 @@ public class NewProjectAddedImpl extends ProjectRelatedImpl implements NewProjec
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Project getParentProject() {
-		return (Project) eGet(LogPackage.Literals.NEW_PROJECT_ADDED__PARENT_PROJECT, true);
+	@Override
+	public store.Project getParentProject() {
+		return (store.Project) eGet(LogPackage.Literals.NEW_PROJECT_ADDED__PARENT_PROJECT, true);
 	}
 
 	/**
@@ -85,7 +86,8 @@ public class NewProjectAddedImpl extends ProjectRelatedImpl implements NewProjec
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParentProject(Project newParentProject) {
+	@Override
+	public void setParentProject(store.Project newParentProject) {
 		eSet(LogPackage.Literals.NEW_PROJECT_ADDED__PARENT_PROJECT, newParentProject);
 	}
 

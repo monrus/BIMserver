@@ -76,8 +76,9 @@ public class RevisionRelatedImpl extends LogActionImpl implements RevisionRelate
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Revision getRevision() {
-		return (Revision) eGet(LogPackage.Literals.REVISION_RELATED__REVISION, true);
+	@Override
+	public store.Revision getRevision() {
+		return (store.Revision) eGet(LogPackage.Literals.REVISION_RELATED__REVISION, true);
 	}
 
 	/**
@@ -85,7 +86,8 @@ public class RevisionRelatedImpl extends LogActionImpl implements RevisionRelate
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setRevision(Revision newRevision) {
+	@Override
+	public void setRevision(store.Revision newRevision) {
 		eSet(LogPackage.Literals.REVISION_RELATED__REVISION, newRevision);
 	}
 

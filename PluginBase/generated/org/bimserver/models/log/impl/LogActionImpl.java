@@ -92,6 +92,7 @@ public class LogActionImpl extends IdEObjectImpl implements LogAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Date getDate() {
 		return (Date) eGet(LogPackage.Literals.LOG_ACTION__DATE, true);
 	}
@@ -101,6 +102,7 @@ public class LogActionImpl extends IdEObjectImpl implements LogAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDate(Date newDate) {
 		eSet(LogPackage.Literals.LOG_ACTION__DATE, newDate);
 	}
@@ -110,8 +112,9 @@ public class LogActionImpl extends IdEObjectImpl implements LogAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public User getExecutor() {
-		return (User) eGet(LogPackage.Literals.LOG_ACTION__EXECUTOR, true);
+	@Override
+	public store.User getExecutor() {
+		return (store.User) eGet(LogPackage.Literals.LOG_ACTION__EXECUTOR, true);
 	}
 
 	/**
@@ -119,7 +122,8 @@ public class LogActionImpl extends IdEObjectImpl implements LogAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setExecutor(User newExecutor) {
+	@Override
+	public void setExecutor(store.User newExecutor) {
 		eSet(LogPackage.Literals.LOG_ACTION__EXECUTOR, newExecutor);
 	}
 
@@ -128,6 +132,7 @@ public class LogActionImpl extends IdEObjectImpl implements LogAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public AccessMethod getAccessMethod() {
 		return (AccessMethod) eGet(LogPackage.Literals.LOG_ACTION__ACCESS_METHOD, true);
 	}
@@ -137,6 +142,7 @@ public class LogActionImpl extends IdEObjectImpl implements LogAction {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setAccessMethod(AccessMethod newAccessMethod) {
 		eSet(LogPackage.Literals.LOG_ACTION__ACCESS_METHOD, newAccessMethod);
 	}

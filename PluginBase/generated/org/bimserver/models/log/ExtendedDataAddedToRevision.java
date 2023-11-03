@@ -63,12 +63,12 @@ public interface ExtendedDataAddedToRevision extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Revision</em>' reference.
-	 * @see #setRevision(Revision)
+	 * @see #setRevision(store.Revision)
 	 * @see org.bimserver.models.log.LogPackage#getExtendedDataAddedToRevision_Revision()
 	 * @model
 	 * @generated
 	 */
-	Revision getRevision();
+	store.Revision getRevision();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.ExtendedDataAddedToRevision#getRevision <em>Revision</em>}' reference.
@@ -78,7 +78,7 @@ public interface ExtendedDataAddedToRevision extends LogAction {
 	 * @see #getRevision()
 	 * @generated
 	 */
-	void setRevision(Revision value);
+	void setRevision(store.Revision value);
 
 	/**
 	 * Returns the value of the '<em><b>Extended Data</b></em>' reference.
@@ -89,12 +89,12 @@ public interface ExtendedDataAddedToRevision extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Extended Data</em>' reference.
-	 * @see #setExtendedData(ExtendedData)
+	 * @see #setExtendedData(store.ExtendedData)
 	 * @see org.bimserver.models.log.LogPackage#getExtendedDataAddedToRevision_ExtendedData()
 	 * @model
 	 * @generated
 	 */
-	ExtendedData getExtendedData();
+	store.ExtendedData getExtendedData();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.ExtendedDataAddedToRevision#getExtendedData <em>Extended Data</em>}' reference.
@@ -104,6 +104,6 @@ public interface ExtendedDataAddedToRevision extends LogAction {
 	 * @see #getExtendedData()
 	 * @generated
 	 */
-	void setExtendedData(ExtendedData value);
+	void setExtendedData(store.ExtendedData value);
 
 } // ExtendedDataAddedToRevision

@@ -54,7 +54,7 @@ import org.bimserver.models.store.Revision;
 public interface RevisionRelated extends LogAction {
 	/**
 	 * Returns the value of the '<em><b>Revision</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.bimserver.models.store.Revision#getLogs <em>Logs</em>}'.
+	 * It is bidirectional and its opposite is '{@link store.Revision#getLogs <em>Logs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Revision</em>' reference isn't clear,
@@ -62,13 +62,13 @@ public interface RevisionRelated extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Revision</em>' reference.
-	 * @see #setRevision(Revision)
+	 * @see #setRevision(store.Revision)
 	 * @see org.bimserver.models.log.LogPackage#getRevisionRelated_Revision()
-	 * @see org.bimserver.models.store.Revision#getLogs
+	 * @see store.Revision#getLogs
 	 * @model opposite="logs"
 	 * @generated
 	 */
-	Revision getRevision();
+	store.Revision getRevision();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.RevisionRelated#getRevision <em>Revision</em>}' reference.
@@ -78,6 +78,6 @@ public interface RevisionRelated extends LogAction {
 	 * @see #getRevision()
 	 * @generated
 	 */
-	void setRevision(Revision value);
+	void setRevision(store.Revision value);
 
 } // RevisionRelated

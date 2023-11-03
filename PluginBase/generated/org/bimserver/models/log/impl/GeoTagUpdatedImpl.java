@@ -76,8 +76,9 @@ public class GeoTagUpdatedImpl extends LogActionImpl implements GeoTagUpdated {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public GeoTag getGeoTag() {
-		return (GeoTag) eGet(LogPackage.Literals.GEO_TAG_UPDATED__GEO_TAG, true);
+	@Override
+	public store.GeoTag getGeoTag() {
+		return (store.GeoTag) eGet(LogPackage.Literals.GEO_TAG_UPDATED__GEO_TAG, true);
 	}
 
 	/**
@@ -85,7 +86,8 @@ public class GeoTagUpdatedImpl extends LogActionImpl implements GeoTagUpdated {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setGeoTag(GeoTag newGeoTag) {
+	@Override
+	public void setGeoTag(store.GeoTag newGeoTag) {
 		eSet(LogPackage.Literals.GEO_TAG_UPDATED__GEO_TAG, newGeoTag);
 	}
 

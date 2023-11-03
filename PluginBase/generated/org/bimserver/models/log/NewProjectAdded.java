@@ -61,12 +61,12 @@ public interface NewProjectAdded extends ProjectRelated {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parent Project</em>' reference.
-	 * @see #setParentProject(Project)
+	 * @see #setParentProject(store.Project)
 	 * @see org.bimserver.models.log.LogPackage#getNewProjectAdded_ParentProject()
 	 * @model
 	 * @generated
 	 */
-	Project getParentProject();
+	store.Project getParentProject();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.NewProjectAdded#getParentProject <em>Parent Project</em>}' reference.
@@ -76,6 +76,6 @@ public interface NewProjectAdded extends ProjectRelated {
 	 * @see #getParentProject()
 	 * @generated
 	 */
-	void setParentProject(Project value);
+	void setParentProject(store.Project value);
 
 } // NewProjectAdded

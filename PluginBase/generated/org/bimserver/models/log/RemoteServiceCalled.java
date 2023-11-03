@@ -68,12 +68,12 @@ public interface RemoteServiceCalled extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Service</em>' reference.
-	 * @see #setService(Service)
+	 * @see #setService(store.Service)
 	 * @see org.bimserver.models.log.LogPackage#getRemoteServiceCalled_Service()
 	 * @model
 	 * @generated
 	 */
-	Service getService();
+	store.Service getService();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.RemoteServiceCalled#getService <em>Service</em>}' reference.
@@ -83,11 +83,11 @@ public interface RemoteServiceCalled extends LogAction {
 	 * @see #getService()
 	 * @generated
 	 */
-	void setService(Service value);
+	void setService(store.Service value);
 
 	/**
 	 * Returns the value of the '<em><b>State</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.bimserver.models.store.NotifictionResultEnum}.
+	 * The literals are from the enumeration {@link store.NotifictionResultEnum}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>State</em>' attribute isn't clear,
@@ -95,24 +95,24 @@ public interface RemoteServiceCalled extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>State</em>' attribute.
-	 * @see org.bimserver.models.store.NotifictionResultEnum
-	 * @see #setState(NotifictionResultEnum)
+	 * @see store.NotifictionResultEnum
+	 * @see #setState(store.NotifictionResultEnum)
 	 * @see org.bimserver.models.log.LogPackage#getRemoteServiceCalled_State()
 	 * @model
 	 * @generated
 	 */
-	NotifictionResultEnum getState();
+	store.NotifictionResultEnum getState();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.RemoteServiceCalled#getState <em>State</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>State</em>' attribute.
-	 * @see org.bimserver.models.store.NotifictionResultEnum
+	 * @see store.NotifictionResultEnum
 	 * @see #getState()
 	 * @generated
 	 */
-	void setState(NotifictionResultEnum value);
+	void setState(store.NotifictionResultEnum value);
 
 	/**
 	 * Returns the value of the '<em><b>Percentage</b></em>' attribute.

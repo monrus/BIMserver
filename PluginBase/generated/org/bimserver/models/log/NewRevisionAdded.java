@@ -61,12 +61,12 @@ public interface NewRevisionAdded extends RevisionRelated {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Project</em>' reference.
-	 * @see #setProject(Project)
+	 * @see #setProject(store.Project)
 	 * @see org.bimserver.models.log.LogPackage#getNewRevisionAdded_Project()
 	 * @model
 	 * @generated
 	 */
-	Project getProject();
+	store.Project getProject();
 
 	/**
 	 * Sets the value of the '{@link org.bimserver.models.log.NewRevisionAdded#getProject <em>Project</em>}' reference.
@@ -76,6 +76,6 @@ public interface NewRevisionAdded extends RevisionRelated {
 	 * @see #getProject()
 	 * @generated
 	 */
-	void setProject(Project value);
+	void setProject(store.Project value);
 
 } // NewRevisionAdded

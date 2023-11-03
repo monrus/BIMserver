@@ -76,8 +76,9 @@ public class CheckoutRelatedImpl extends LogActionImpl implements CheckoutRelate
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Checkout getCheckout() {
-		return (Checkout) eGet(LogPackage.Literals.CHECKOUT_RELATED__CHECKOUT, true);
+	@Override
+	public store.Checkout getCheckout() {
+		return (store.Checkout) eGet(LogPackage.Literals.CHECKOUT_RELATED__CHECKOUT, true);
 	}
 
 	/**
@@ -85,7 +86,8 @@ public class CheckoutRelatedImpl extends LogActionImpl implements CheckoutRelate
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCheckout(Checkout newCheckout) {
+	@Override
+	public void setCheckout(store.Checkout newCheckout) {
 		eSet(LogPackage.Literals.CHECKOUT_RELATED__CHECKOUT, newCheckout);
 	}
 
