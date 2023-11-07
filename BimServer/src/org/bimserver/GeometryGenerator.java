@@ -286,9 +286,9 @@ public class GeometryGenerator extends GenericGeometryGenerator {
 									geometryInfo.setData(geometryData);
 
 									long length = (geometryData.getIndices() != null ? geometryData.getIndices().getData().length: 0) + 
-													(geometryData.getVertices() != null ? geometryData.getVertices().getData().length : 0) + 
-													(geometryData.getNormals() != null ? geometryData.getNormals().getData().length : 0) + 
-													(geometryData.getColorsQuantized() != null ? geometryData.getColorsQuantized().getData().length : 0);
+										(geometryData.getVertices() != null ? geometryData.getVertices().getData().length : 0) + 
+										(geometryData.getNormals() != null ? geometryData.getNormals().getData().length : 0) + 
+										(geometryData.getColorsQuantized() != null ? geometryData.getColorsQuantized().getData().length : 0);
 
 									setTransformationMatrix(geometryInfo, tranformationMatrix);
 									if (store) {
