@@ -1178,7 +1178,12 @@ public abstract class IfcModel implements IfcModelInterface {
 	@Override
 	public void query(ObjectNode query, boolean assumeCompletePreload) throws ServerException, UserException, PublicInterfaceNotFoundException, IfcModelInterfaceException, IOException {
 	}
-	
+
+	@Override
+	public void queryFully(ObjectNode query, boolean assumeCompletePreload) throws ServerException, UserException, PublicInterfaceNotFoundException, IfcModelInterfaceException, IOException {
+
+	}
+
 	class Mismatch {
 		EReference forward;
 		EReference[] inverse;
