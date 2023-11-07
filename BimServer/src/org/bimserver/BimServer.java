@@ -737,7 +737,7 @@ public class BimServer implements BasicServerInfoProvider {
 
 			serverSettingsCache = new ServerSettingsCache(bimDatabase);
 
-			for (String schema : new String[]{"ifc2x3tc1", "ifc4"}) {
+			for (String schema : new String[]{"ifc2x3tc1", "ifc4", "ifc4x3"}) {
 				for (String type : new String[] {"geometry", "stdlib"}) {
 					try {
 						PackageMetaData packageMetaData = getMetaDataManager().getPackageMetaData(schema);
