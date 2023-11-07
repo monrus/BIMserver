@@ -82,6 +82,7 @@ public class MetaDataManager {
 		
 		executor.submit(new PackageLoader(this, Ifc2x3tc1Package.eINSTANCE, Schema.IFC2X3TC1));
 		executor.submit(new PackageLoader(this, Ifc4Package.eINSTANCE, Schema.IFC4));
+		executor.submit(new PackageLoader(this, Ifc4Package.eINSTANCE, Schema.IFC4X3));
 		executor.submit(new PackageLoader(this, GeometryPackage.eINSTANCE, Schema.GEOMETRY));
 		executor.submit(new PackageLoader(this, StorePackage.eINSTANCE, Schema.STORE));
 		executor.submit(new PackageLoader(this, LogPackage.eINSTANCE, Schema.LOG));
@@ -142,6 +143,7 @@ public class MetaDataManager {
 		Set<PackageMetaData> result = new HashSet<>();
 		result.add(getPackageMetaData("Ifc2x3tc1"));
 		result.add(getPackageMetaData("Ifc4"));
+    result.add(getPackageMetaData("Ifc4x3"));
 		return result;
 	}
 }

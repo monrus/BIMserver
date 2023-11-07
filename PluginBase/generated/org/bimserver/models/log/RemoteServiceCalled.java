@@ -87,7 +87,7 @@ public interface RemoteServiceCalled extends LogAction {
 
 	/**
 	 * Returns the value of the '<em><b>State</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.bimserver.models.store.NotifictionResultEnum}.
+	 * The literals are from the enumeration {@link NotifictionResultEnum}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>State</em>' attribute isn't clear,
@@ -95,7 +95,7 @@ public interface RemoteServiceCalled extends LogAction {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>State</em>' attribute.
-	 * @see org.bimserver.models.store.NotifictionResultEnum
+	 * @see NotifictionResultEnum
 	 * @see #setState(NotifictionResultEnum)
 	 * @see org.bimserver.models.log.LogPackage#getRemoteServiceCalled_State()
 	 * @model
@@ -108,7 +108,7 @@ public interface RemoteServiceCalled extends LogAction {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>State</em>' attribute.
-	 * @see org.bimserver.models.store.NotifictionResultEnum
+	 * @see NotifictionResultEnum
 	 * @see #getState()
 	 * @generated
 	 */

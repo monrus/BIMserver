@@ -23,6 +23,7 @@ import java.util.Set;
 import org.bimserver.models.geometry.GeometryPackage;
 import org.bimserver.models.ifc2x3tc1.Ifc2x3tc1Package;
 import org.bimserver.models.ifc4.Ifc4Package;
+import org.bimserver.models.ifc4x3.Ifc4x3Package;
 import org.bimserver.models.log.LogPackage;
 import org.bimserver.models.store.StorePackage;
 import org.eclipse.emf.ecore.EPackage;
@@ -32,7 +33,8 @@ public enum Schema {
 	GEOMETRY(GeometryPackage.eINSTANCE, "GEOMETRY"),
 	LOG(LogPackage.eINSTANCE, "LOG"),
 	IFC2X3TC1(Ifc2x3tc1Package.eINSTANCE, "IFC2X3"),
-	IFC4(Ifc4Package.eINSTANCE, "IFC4");
+	IFC4(Ifc4Package.eINSTANCE, "IFC4"),
+  IFC4X3(Ifc4x3Package.eINSTANCE, "IFC4X3");
 	
 	private String headerName;
 	private EPackage ePackage;
@@ -68,6 +70,7 @@ public enum Schema {
 		Set<Schema> schemas = new HashSet<>();
 		schemas.add(IFC2X3TC1);
 		schemas.add(IFC4);
+		schemas.add(IFC4X3);
 		return schemas;
 	}
 
@@ -76,6 +79,8 @@ public enum Schema {
 			return Schema.IFC2X3TC1;
 		} else if ("IFC4".equals(schema.toUpperCase())) {
 			return Schema.IFC4;
+		} else if ("IFC4X3".equalsIgnoreCase(schema)) {
+			return Schema.IFC4X3;
 		}
 		return null;
 	}
