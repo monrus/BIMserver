@@ -916,6 +916,20 @@ public class ClientIfcModel extends IfcModel implements GeometryTarget {
 
 		modelState = ModelState.NONE;
 	}
+
+	@Override
+	public void queryFully(ObjectNode query, boolean assumeCompletePreload) throws ServerException, UserException, PublicInterfaceNotFoundException, IfcModelInterfaceException, IOException {
+		this.assumeCompletePreload = assumeCompletePreload;
+		modelState = ModelState.LOADING;
+		Long topicId = bimServerClient.getServiceInterface().download(Collections.singleton(roid), query.toString(), bimServerClient.getJsonSerializerOid(), false);
+		bimServerClient.waitForDonePreparing(topicId);
+
+		processDownload(topicId);
+		bimServerClient.getServiceInterface().cleanupLongAction(topicId);
+
+		modelState = ModelState.FULLY_LOADED;
+	}
+
 	
 	public void queryNew(Query query, IfcModelChangeListener ifcModelChangeListener, boolean assumeCompletePreload) {
 		this.assumeCompletePreload = assumeCompletePreload;
