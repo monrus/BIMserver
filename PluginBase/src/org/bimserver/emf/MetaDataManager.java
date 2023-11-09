@@ -50,6 +50,7 @@ import java.util.concurrent.TimeUnit;
 import org.bimserver.models.geometry.GeometryPackage;
 import org.bimserver.models.ifc2x3tc1.Ifc2x3tc1Package;
 import org.bimserver.models.ifc4.Ifc4Package;
+import org.bimserver.models.ifc4x3.Ifc4x3Package;
 import org.bimserver.models.log.LogPackage;
 import org.bimserver.models.store.StorePackage;
 import org.eclipse.emf.ecore.EClass;
@@ -82,7 +83,7 @@ public class MetaDataManager {
 		
 		executor.submit(new PackageLoader(this, Ifc2x3tc1Package.eINSTANCE, Schema.IFC2X3TC1));
 		executor.submit(new PackageLoader(this, Ifc4Package.eINSTANCE, Schema.IFC4));
-		executor.submit(new PackageLoader(this, Ifc4Package.eINSTANCE, Schema.IFC4X3));
+		executor.submit(new PackageLoader(this, Ifc4x3Package.eINSTANCE, Schema.IFC4X3));
 		executor.submit(new PackageLoader(this, GeometryPackage.eINSTANCE, Schema.GEOMETRY));
 		executor.submit(new PackageLoader(this, StorePackage.eINSTANCE, Schema.STORE));
 		executor.submit(new PackageLoader(this, LogPackage.eINSTANCE, Schema.LOG));
