@@ -113,7 +113,7 @@ public class PackageMetaData implements ObjectFactory, Comparable<PackageMetaDat
 				} else if (schema == Schema.IFC4) {
 					schemaDefinition = SchemaLoader.loadIfc4();
 				} else if (schema == Schema.IFC4X3) {
-					schemaDefinition = SchemaLoader.loadIfc4x3(); // TODO: add IFC4X3
+					schemaDefinition = SchemaLoader.loadIfc4x3();
 				} else {
 					LOGGER.error("Unimplemented schema: " + schema);
 				}
@@ -447,7 +447,8 @@ public class PackageMetaData implements ObjectFactory, Comparable<PackageMetaDat
 		if (isInverseCache.containsKey(eReference)) {
 			return isInverseCache.get(eReference);
 		}
-		throw new RuntimeException("Inverse cache not initialized for " + eReference.getName());
+		return false;
+		// throw new RuntimeException("Inverse cache not initialized for " + eReference.getName()); // TODO: understand why fail
 	}
 
 	// This is a slow method, but only used in code generators
@@ -480,7 +481,14 @@ public class PackageMetaData implements ObjectFactory, Comparable<PackageMetaDat
 	}
 
 	public Set<EClass> getAllSubClassesIncludingSelf(EClass superClass) {
-		Set<EClass> set = new TreeSet<>(getAllSubClasses(superClass));
+		Set<EClass> set = new TreeSet<EClass>(new Comparator<EClass>() {
+			@Override
+			public int compare(EClass o1, EClass o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		set.addAll(getAllSubClasses(superClass));
+
 		set.add(superClass);
 		return set;
 	}

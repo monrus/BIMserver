@@ -363,10 +363,10 @@ public class LogPackageImpl extends EPackageImpl implements LogPackage {
 		Ifc4x3PackageImpl theIfc4x3Package = (Ifc4x3PackageImpl) (registeredPackage instanceof Ifc4x3PackageImpl
 				? registeredPackage
 				: Ifc4x3Package.eINSTANCE);
-		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(store.StorePackage.eNS_URI);
-		store.impl.StorePackageImpl theStorePackage = (store.impl.StorePackageImpl) (registeredPackage instanceof store.impl.StorePackageImpl
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(StorePackage.eNS_URI);
+		StorePackageImpl theStorePackage = (StorePackageImpl) (registeredPackage instanceof StorePackageImpl
 				? registeredPackage
-				: store.StorePackage.eINSTANCE);
+				: StorePackage.eINSTANCE);
 
 		// Load packages
 		theLogPackage.loadPackage();
@@ -374,12 +374,7 @@ public class LogPackageImpl extends EPackageImpl implements LogPackage {
 		theIfc2x3tc1Package.loadPackage();
 		theIfc4Package.loadPackage();
 		theIfc4x3Package.loadPackage();
-
-		// Create package meta-data objects
-		theStorePackage.createPackageContents();
-
-		// Initialize created meta-data
-		theStorePackage.initializePackageContents();
+		theStorePackage.loadPackage();
 
 		// Fix loaded packages
 		theLogPackage.fixPackageContents();
@@ -387,6 +382,7 @@ public class LogPackageImpl extends EPackageImpl implements LogPackage {
 		theIfc2x3tc1Package.fixPackageContents();
 		theIfc4Package.fixPackageContents();
 		theIfc4x3Package.fixPackageContents();
+		theStorePackage.fixPackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theLogPackage.freeze();

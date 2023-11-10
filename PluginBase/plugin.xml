@@ -59,7 +59,7 @@
       <!-- @generated models -->
       <package
             uri="store"
-            class="store.StorePackage"/>
+            class="org.bimserver.models.store.StorePackage"/>
    </extension>
 
 </plugin>

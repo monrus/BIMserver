@@ -19004,7 +19004,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute models.ecore#/4/RemoteServiceCalled/errors"/>
     </genClasses>
   </genPackages>
-  <genPackages prefix="Store" ecorePackage="models.ecore#/5">
+  <genPackages prefix="Store" basePackage="org.bimserver.models" loadInitialization="true" ecorePackage="models.ecore#/5">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="models.ecore#/5/UserType">
       <genEnumLiterals ecoreEnumLiteral="models.ecore#/5/UserType/SYSTEM"/>
       <genEnumLiterals ecoreEnumLiteral="models.ecore#/5/UserType/ADMIN"/>
