@@ -20,7 +20,7 @@ package org.bimserver.utils;
 import org.bimserver.emf.IdEObject;
 import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.emf.IfcModelInterfaceException;
-import org.bimserver.models.ifc4.*;
+import org.bimserver.models.ifc4x3.*;
 import org.bimserver.plugins.ObjectAlreadyExistsException;
 import org.bimserver.shared.GuidCompressor;
 import org.eclipse.emf.common.util.EList;
