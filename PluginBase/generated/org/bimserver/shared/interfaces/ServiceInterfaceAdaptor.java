@@ -134,6 +134,11 @@ public class ServiceInterfaceAdaptor implements org.bimserver.shared.interfaces.
 	public org.bimserver.interfaces.objects.SCompareResult compare(java.lang.Long roid1, java.lang.Long roid2, org.bimserver.interfaces.objects.SCompareType sCompareType, java.lang.Long mcid) throws UserException, ServerException {
 		return null;
 	}
+
+	@Override
+	public Boolean hardDeleteProject(Long poid) throws ServerException, UserException {
+		return null;
+	}
 	
 	public java.lang.Boolean deleteProject(java.lang.Long poid) throws UserException, ServerException {
 		return null;
