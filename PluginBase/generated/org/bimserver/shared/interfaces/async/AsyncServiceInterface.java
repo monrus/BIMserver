@@ -1147,6 +1147,18 @@ public class AsyncServiceInterface {
 			}
 		});
 	}
+
+	public void hardDeleteProject(final java.lang.Long poid, final DeleteProjectCallback callback) {
+		executorService.submit(new Runnable(){
+			public void run(){
+				try {
+					callback.success(syncService.hardDeleteProject(poid));
+				} catch (Throwable e) {
+					callback.error(e);
+				}
+			}
+		});
+	}
 	
 	public void deleteService(final java.lang.Long oid, final DeleteServiceCallback callback) {
 		executorService.submit(new Runnable(){

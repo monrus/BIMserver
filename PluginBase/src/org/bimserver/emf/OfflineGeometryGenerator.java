@@ -23,10 +23,7 @@ import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bimserver.BimserverDatabaseException;
@@ -131,7 +128,7 @@ public class OfflineGeometryGenerator {
 		return map;
 	}
 
-	public Map<IfcProduct, GeometryInfo> generateForElements(List<IfcProduct> products) {
+	public Map<IfcProduct, GeometryInfo> generateForElements(Collection<IfcProduct> products) {
 		Map<IfcProduct, GeometryInfo> map = new HashMap<>();
 		try {
 			serializer.init(model, null, true);

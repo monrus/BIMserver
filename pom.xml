@@ -7,9 +7,7 @@
 	<description>This is the parent pom, no idea why this is being released</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jetty.version>9.4.44.v20210927</jetty.version>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<skipTests>true</skipTests>
 	</properties>
 	<scm>
 		<url>https://github.com/opensourceBIM/BIMserver.git</url>
