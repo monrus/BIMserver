@@ -26,6 +26,8 @@ public class ChangeHelper {
 	private ChangeHelper() {}
 
 	public static boolean canBeChanged(EClass eClass) {
-		return eClass.getEPackage() == Ifc2x3tc1Package.eINSTANCE || eClass.getEPackage() == Ifc4Package.eINSTANCE || eClass.getEPackage() == Ifc4x3Package.eINSTANCE;
+		return eClass.getEPackage() == Ifc2x3tc1Package.eINSTANCE ||
+			eClass.getEPackage() == Ifc4Package.eINSTANCE ||
+			eClass.getEPackage() == Ifc4x3Package.eINSTANCE;
 	}
 }

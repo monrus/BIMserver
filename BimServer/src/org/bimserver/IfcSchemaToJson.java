@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import org.bimserver.models.geometry.GeometryPackage;
 import org.bimserver.models.ifc2x3tc1.Ifc2x3tc1Package;
 import org.bimserver.models.ifc4.Ifc4Package;
+import org.bimserver.models.ifc4x3.Ifc4x3Package;
 import org.bimserver.shared.IfcDoc;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -44,12 +45,33 @@ public class IfcSchemaToJson {
 		generateGeometry();
 		generateIfc2x3tc1(args[0]);
 		generateIfc4(args[1]);
+		generateIfc4x3(args[2]);
+	}
+
+	private static void generateIfc4x3(String location) {
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(new File("BimServer/www/js/ifc4x3.js"));
+			new IfcSchemaToJson().convert(fos, new File(location), Ifc4x3Package.eINSTANCE);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	private static void generateIfc4(String location) {
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(new File("www/js/ifc4.js"));
+			fos = new FileOutputStream(new File("BimServer/www/js/ifc4.js"));
 			new IfcSchemaToJson().convert(fos, new File(location), Ifc4Package.eINSTANCE);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -69,7 +91,7 @@ public class IfcSchemaToJson {
 	private static void generateIfc2x3tc1(String location) {
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(new File("www/js/ifc2x3tc1.js"));
+			fos = new FileOutputStream(new File("BimServer/www/js/ifc2x3tc1.js"));
 			new IfcSchemaToJson().convert(fos, new File(location), Ifc2x3tc1Package.eINSTANCE);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -89,7 +111,7 @@ public class IfcSchemaToJson {
 	private static void generateGeometry() {
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(new File("www/js/geometry.js"));
+			fos = new FileOutputStream(new File("BimServer/www/js/geometry.js"));
 			new IfcSchemaToJson().convert(fos, null, GeometryPackage.eINSTANCE);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

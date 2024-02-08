@@ -198,7 +198,10 @@ public class Database implements BimDatabase {
 			}
 			for (EClass eClass : cidToEclass) {
 				if (eClass != null) {
-					if (eClass.getEPackage() == Ifc2x3tc1Package.eINSTANCE || eClass.getEPackage() == Ifc4Package.eINSTANCE || eClass.getEPackage() == Ifc4x3Package.eINSTANCE) {
+					if (eClass.getEPackage() == Ifc2x3tc1Package.eINSTANCE ||
+							eClass.getEPackage() == Ifc4Package.eINSTANCE ||
+							eClass.getEPackage() == Ifc4x3Package.eINSTANCE
+					) {
 						realClasses.add(eClass.getName());
 					}
 				}
@@ -302,7 +305,10 @@ public class Database implements BimDatabase {
 				EClass eClass = (EClass) getEClassifier(packageName, className);
 				
 				// TODO geometry?
-				boolean transactional = !(eClass.getEPackage() == Ifc2x3tc1Package.eINSTANCE || eClass.getEPackage() == Ifc4Package.eINSTANCE || eClass.getEPackage() == Ifc4x3Package.eINSTANCE);
+				boolean transactional = !(
+					eClass.getEPackage() == Ifc2x3tc1Package.eINSTANCE ||
+					eClass.getEPackage() == Ifc4Package.eINSTANCE ||
+					eClass.getEPackage() == Ifc4x3Package.eINSTANCE);
 
 				keyValueStore.openTable(databaseSession, packageAndClassName, transactional);
 				

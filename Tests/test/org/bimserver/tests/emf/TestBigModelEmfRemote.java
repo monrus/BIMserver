@@ -29,32 +29,28 @@ import org.bimserver.client.json.JsonBimServerClientFactory;
 import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.emf.IfcModelInterfaceException;
 import org.bimserver.ifc.BasicIfcModel;
-import org.bimserver.ifc.step.serializer.Ifc2x3tc1StepSerializer;
+import org.bimserver.ifc.step.serializer.Ifc4x3StepSerializer;
 import org.bimserver.interfaces.objects.SDeserializerPluginConfiguration;
 import org.bimserver.interfaces.objects.SLongCheckinActionState;
 import org.bimserver.interfaces.objects.SProject;
 import org.bimserver.interfaces.objects.SSerializerPluginConfiguration;
-import org.bimserver.models.ifc4.IfcAxis2Placement3D;
-import org.bimserver.models.ifc4.IfcBuilding;
-import org.bimserver.models.ifc4.IfcBuildingStorey;
-import org.bimserver.models.ifc4.IfcElementCompositionEnum;
-import org.bimserver.models.ifc4.IfcFurnishingElement;
-import org.bimserver.models.ifc4.IfcInternalOrExternalEnum;
-import org.bimserver.models.ifc4.IfcLocalPlacement;
-import org.bimserver.models.ifc4.IfcProductRepresentation;
-import org.bimserver.models.ifc4.IfcRelAggregates;
-import org.bimserver.models.ifc4.IfcRepresentationContext;
-import org.bimserver.models.ifc4.IfcSpace;
-import org.bimserver.models.ifc4.IfcSpaceTypeEnum;
-import org.bimserver.plugins.deserializers.Deserializer;
+import org.bimserver.models.ifc4x3.IfcAxis2Placement3D;
+import org.bimserver.models.ifc4x3.IfcBuilding;
+import org.bimserver.models.ifc4x3.IfcBuildingStorey;
+import org.bimserver.models.ifc4x3.IfcElementCompositionEnum;
+import org.bimserver.models.ifc4x3.IfcFurnishingElement;
+import org.bimserver.models.ifc4x3.IfcLocalPlacement;
+import org.bimserver.models.ifc4x3.IfcProductRepresentation;
+import org.bimserver.models.ifc4x3.IfcRelAggregates;
+import org.bimserver.models.ifc4x3.IfcRepresentationContext;
+import org.bimserver.models.ifc4x3.IfcSpace;
+import org.bimserver.models.ifc4x3.IfcSpaceTypeEnum;
 import org.bimserver.plugins.serializers.Serializer;
 import org.bimserver.plugins.services.BimServerClientInterface;
 import org.bimserver.shared.BimServerClientFactory;
 import org.bimserver.shared.UsernamePasswordAuthenticationInfo;
 import org.bimserver.utils.RichIfcModel;
 import org.junit.Test;
-
-import com.google.common.io.Files;
 
 public class TestBigModelEmfRemote {
 	
@@ -109,7 +105,7 @@ public class TestBigModelEmfRemote {
 			if (useLowLevelCalls) {
 				roid = model.commit("Initial model");
 			} else {
-				Serializer serializer = new Ifc2x3tc1StepSerializer(null);
+				Serializer serializer = new Ifc4x3StepSerializer(null);
 				serializer.init(model, null, true);
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				serializer.writeToOutputStream(baos, null);

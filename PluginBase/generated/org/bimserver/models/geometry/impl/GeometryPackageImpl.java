@@ -42,6 +42,8 @@ import org.bimserver.models.ifc2x3tc1.Ifc2x3tc1Package;
 import org.bimserver.models.ifc2x3tc1.impl.Ifc2x3tc1PackageImpl;
 import org.bimserver.models.ifc4.Ifc4Package;
 import org.bimserver.models.ifc4.impl.Ifc4PackageImpl;
+import org.bimserver.models.ifc4x3.Ifc4x3Package;
+import org.bimserver.models.ifc4x3.impl.Ifc4x3PackageImpl;
 import org.bimserver.models.log.LogPackage;
 import org.bimserver.models.log.impl.LogPackageImpl;
 import org.bimserver.models.store.StorePackage;
@@ -171,6 +173,8 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		Ifc2x3tc1PackageImpl theIfc2x3tc1Package = (Ifc2x3tc1PackageImpl) (registeredPackage instanceof Ifc2x3tc1PackageImpl ? registeredPackage : Ifc2x3tc1Package.eINSTANCE);
 		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(Ifc4Package.eNS_URI);
 		Ifc4PackageImpl theIfc4Package = (Ifc4PackageImpl) (registeredPackage instanceof Ifc4PackageImpl ? registeredPackage : Ifc4Package.eINSTANCE);
+		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(Ifc4x3Package.eNS_URI);
+		Ifc4x3PackageImpl theIfc4x3Package = (Ifc4x3PackageImpl) (registeredPackage instanceof Ifc4x3PackageImpl ? registeredPackage : Ifc4x3Package.eINSTANCE);
 		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(LogPackage.eNS_URI);
 		LogPackageImpl theLogPackage = (LogPackageImpl) (registeredPackage instanceof LogPackageImpl ? registeredPackage : LogPackage.eINSTANCE);
 		registeredPackage = EPackage.Registry.INSTANCE.getEPackage(StorePackage.eNS_URI);
@@ -180,6 +184,7 @@ public class GeometryPackageImpl extends EPackageImpl implements GeometryPackage
 		theGeometryPackage.loadPackage();
 		theIfc2x3tc1Package.loadPackage();
 		theIfc4Package.loadPackage();
+		theIfc4x3Package.loadPackage();
 		theLogPackage.loadPackage();
 		theStorePackage.loadPackage();
 

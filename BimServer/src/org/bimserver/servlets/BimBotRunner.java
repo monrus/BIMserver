@@ -312,6 +312,8 @@ public class BimBotRunner implements Runnable {
 			return "ifc2x3tc1";
 		} else if (schema == SchemaName.IFC_JSON_4) {
 			return "ifc4";
+		} else if (schema == SchemaName.IFC_JSON_4X3) {
+			return "ifc4x3";
 		}
 		return null;
 	}
