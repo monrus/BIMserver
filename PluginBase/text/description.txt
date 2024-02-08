@@ -14262,6 +14262,7 @@ Package ifc4x3 <http://buildingsmart.ifc4x3.ecore>
     Reference ReferencedBy : IfcRelAssignsToProduct<<0..*>>
     Reference PositionedRelativeTo : IfcRelPositions<<0..*>>
     Reference ReferencedInStructures : IfcRelReferencedInSpatialStructure<<0..*>>
+    Reference geometry : GeometryInfo
 
   Class IfcProductDefinitionShape -> IfcProductRepresentation, IfcProductRepresentationSelect
     Reference ShapeOfProduct : IfcProduct<<0..*>>

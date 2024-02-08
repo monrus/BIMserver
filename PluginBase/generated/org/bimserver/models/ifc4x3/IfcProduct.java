@@ -16,6 +16,7 @@
  */
 package org.bimserver.models.ifc4x3;
 
+import org.bimserver.models.geometry.GeometryInfo;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -32,6 +33,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.bimserver.models.ifc4x3.IfcProduct#getReferencedBy <em>Referenced By</em>}</li>
  *   <li>{@link org.bimserver.models.ifc4x3.IfcProduct#getPositionedRelativeTo <em>Positioned Relative To</em>}</li>
  *   <li>{@link org.bimserver.models.ifc4x3.IfcProduct#getReferencedInStructures <em>Referenced In Structures</em>}</li>
+ *   <li>{@link org.bimserver.models.ifc4x3.IfcProduct#getGeometry <em>Geometry</em>}</li>
  * </ul>
  *
  * @see org.bimserver.models.ifc4x3.Ifc4x3Package#getIfcProduct()
@@ -250,5 +252,54 @@ public interface IfcProduct extends IfcObject, IfcProductSelect, IfcSpatialRefer
 	 * @generated
 	 */
 	boolean isSetReferencedInStructures();
+
+	/**
+	 * Returns the value of the '<em><b>Geometry</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Geometry</em>' reference.
+	 * @see #isSetGeometry()
+	 * @see #unsetGeometry()
+	 * @see #setGeometry(GeometryInfo)
+	 * @see org.bimserver.models.ifc4x3.Ifc4x3Package#getIfcProduct_Geometry()
+	 * @model unsettable="true"
+	 * @generated
+	 */
+	GeometryInfo getGeometry();
+
+	/**
+	 * Sets the value of the '{@link org.bimserver.models.ifc4x3.IfcProduct#getGeometry <em>Geometry</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Geometry</em>' reference.
+	 * @see #isSetGeometry()
+	 * @see #unsetGeometry()
+	 * @see #getGeometry()
+	 * @generated
+	 */
+	void setGeometry(GeometryInfo value);
+
+	/**
+	 * Unsets the value of the '{@link org.bimserver.models.ifc4x3.IfcProduct#getGeometry <em>Geometry</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetGeometry()
+	 * @see #getGeometry()
+	 * @see #setGeometry(GeometryInfo)
+	 * @generated
+	 */
+	void unsetGeometry();
+
+	/**
+	 * Returns whether the value of the '{@link org.bimserver.models.ifc4x3.IfcProduct#getGeometry <em>Geometry</em>}' reference is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Geometry</em>' reference is set.
+	 * @see #unsetGeometry()
+	 * @see #getGeometry()
+	 * @see #setGeometry(GeometryInfo)
+	 * @generated
+	 */
+	boolean isSetGeometry();
 
 } // IfcProduct

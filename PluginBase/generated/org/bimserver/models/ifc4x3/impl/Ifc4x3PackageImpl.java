@@ -28682,6 +28682,16 @@ public class Ifc4x3PackageImpl extends EPackageImpl implements Ifc4x3Package {
 	 * @generated
 	 */
 	@Override
+	public EReference getIfcProduct_Geometry() {
+		return (EReference) getIfcProduct().getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getIfcProductDefinitionShape() {
 		if (ifcProductDefinitionShapeEClass == null) {
 			ifcProductDefinitionShapeEClass = (EClass) EPackage.Registry.INSTANCE.getEPackage(Ifc4x3Package.eNS_URI)

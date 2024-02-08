@@ -16,6 +16,7 @@
  */
 package org.bimserver.models.ifc4x3.impl;
 
+import org.bimserver.models.geometry.GeometryInfo;
 import org.bimserver.models.ifc4x3.Ifc4x3Package;
 import org.bimserver.models.ifc4x3.IfcObjectPlacement;
 import org.bimserver.models.ifc4x3.IfcProduct;
@@ -41,6 +42,7 @@ import org.eclipse.emf.ecore.EClass;
  *   <li>{@link org.bimserver.models.ifc4x3.impl.IfcProductImpl#getReferencedBy <em>Referenced By</em>}</li>
  *   <li>{@link org.bimserver.models.ifc4x3.impl.IfcProductImpl#getPositionedRelativeTo <em>Positioned Relative To</em>}</li>
  *   <li>{@link org.bimserver.models.ifc4x3.impl.IfcProductImpl#getReferencedInStructures <em>Referenced In Structures</em>}</li>
+ *   <li>{@link org.bimserver.models.ifc4x3.impl.IfcProductImpl#getGeometry <em>Geometry</em>}</li>
  * </ul>
  *
  * @generated
@@ -237,6 +239,46 @@ public class IfcProductImpl extends IfcObjectImpl implements IfcProduct {
 	@Override
 	public boolean isSetReferencedInStructures() {
 		return eIsSet(Ifc4x3Package.Literals.IFC_PRODUCT__REFERENCED_IN_STRUCTURES);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public GeometryInfo getGeometry() {
+		return (GeometryInfo) eGet(Ifc4x3Package.Literals.IFC_PRODUCT__GEOMETRY, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setGeometry(GeometryInfo newGeometry) {
+		eSet(Ifc4x3Package.Literals.IFC_PRODUCT__GEOMETRY, newGeometry);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void unsetGeometry() {
+		eUnset(Ifc4x3Package.Literals.IFC_PRODUCT__GEOMETRY);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isSetGeometry() {
+		return eIsSet(Ifc4x3Package.Literals.IFC_PRODUCT__GEOMETRY);
 	}
 
 } //IfcProductImpl
