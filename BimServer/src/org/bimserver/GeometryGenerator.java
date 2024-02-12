@@ -489,7 +489,7 @@ public class GeometryGenerator extends GenericGeometryGenerator {
 		}
 		long start = System.nanoTime();
 		String pluginName = "";
-		if (model.getPackageMetaData().getSchema() == Schema.IFC4X3) {
+		if (model.getPackageMetaData().getSchema() == Schema.IFC4X3_ADD2) {
 			pluginName = "org.bimserver.ifc.step.serializer.Ifc4x3StepSerializerPlugin";
 		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4) {
 			pluginName = "org.bimserver.ifc.step.serializer.Ifc4StepSerializerPlugin";

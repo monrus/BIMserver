@@ -34,7 +34,7 @@ public enum Schema {
 	LOG(LogPackage.eINSTANCE, "LOG"),
 	IFC2X3TC1(Ifc2x3tc1Package.eINSTANCE, "IFC2X3"),
 	IFC4(Ifc4Package.eINSTANCE, "IFC4"),
-  IFC4X3(Ifc4x3Package.eINSTANCE, "IFC4X3");
+  IFC4X3_ADD2(Ifc4x3Package.eINSTANCE, "IFC4X3_ADD2");
 	
 	private String headerName;
 	private EPackage ePackage;
@@ -70,17 +70,17 @@ public enum Schema {
 		Set<Schema> schemas = new HashSet<>();
 		schemas.add(IFC2X3TC1);
 		schemas.add(IFC4);
-		schemas.add(IFC4X3);
+		schemas.add(IFC4X3_ADD2);
 		return schemas;
 	}
 
 	public static Schema fromIfcHeader(String schema) {
-		if ("IFC2X3".equals(schema.toUpperCase())) {
+		if ("IFC2X3".equalsIgnoreCase(schema)) {
 			return Schema.IFC2X3TC1;
-		} else if ("IFC4".equals(schema.toUpperCase())) {
+		} else if ("IFC4".equalsIgnoreCase(schema)) {
 			return Schema.IFC4;
-		} else if ("IFC4X3".equalsIgnoreCase(schema)) {
-			return Schema.IFC4X3;
+		} else if ("IFC4X3_ADD2".equalsIgnoreCase(schema)) {
+			return Schema.IFC4X3_ADD2;
 		}
 		return null;
 	}

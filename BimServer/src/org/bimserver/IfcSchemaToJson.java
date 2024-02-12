@@ -43,16 +43,16 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class IfcSchemaToJson {
 	public static void main(String[] args) {
 		generateGeometry();
-		generateIfc2x3tc1(args[0]);
-		generateIfc4(args[1]);
-		generateIfc4x3(args[2]);
+		generateIfc2x3tc1(null);
+		generateIfc4(null);
+		generateIfc4x3(null);
 	}
 
 	private static void generateIfc4x3(String location) {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(new File("BimServer/www/js/ifc4x3.js"));
-			new IfcSchemaToJson().convert(fos, new File(location), Ifc4x3Package.eINSTANCE);
+			new IfcSchemaToJson().convert(fos, location != null ? new File(location) : null, Ifc4x3Package.eINSTANCE);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -72,7 +72,7 @@ public class IfcSchemaToJson {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(new File("BimServer/www/js/ifc4.js"));
-			new IfcSchemaToJson().convert(fos, new File(location), Ifc4Package.eINSTANCE);
+			new IfcSchemaToJson().convert(fos, location != null ? new File(location) : null, Ifc4Package.eINSTANCE);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -92,7 +92,7 @@ public class IfcSchemaToJson {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(new File("BimServer/www/js/ifc2x3tc1.js"));
-			new IfcSchemaToJson().convert(fos, new File(location), Ifc2x3tc1Package.eINSTANCE);
+			new IfcSchemaToJson().convert(fos, location != null ? new File(location) : null, Ifc2x3tc1Package.eINSTANCE);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

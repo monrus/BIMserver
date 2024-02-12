@@ -1126,7 +1126,7 @@ public abstract class IfcModel implements IfcModelInterface {
 						})
 				};
 				break;
-			case IFC4X3:
+			case IFC4X3_ADD2:
 				misMatches = new Mismatch[]{
 					new Mismatch(ifc4x3.getIfcExternalReferenceRelationship_RelatedResourceObjects(), new EReference[] {
 							ifc4x3.getIfcActorRole_HasExternalReference(),

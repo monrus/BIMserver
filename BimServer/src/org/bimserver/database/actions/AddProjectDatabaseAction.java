@@ -24,6 +24,7 @@ import org.bimserver.BimserverDatabaseException;
 import org.bimserver.database.BimserverLockConflictException;
 import org.bimserver.database.DatabaseSession;
 import org.bimserver.database.PostCommitAction;
+import org.bimserver.emf.Schema;
 import org.bimserver.models.log.AccessMethod;
 import org.bimserver.models.log.NewProjectAdded;
 import org.bimserver.models.store.GeoTag;
@@ -92,10 +93,9 @@ public class AddProjectDatabaseAction extends BimDatabaseAction<Project> {
 			}
 			project.setGeoTag(parent.getGeoTag());
 		}
-		if (
-			schema == null ||
-			!(schema.equalsIgnoreCase("ifc2x3tc1") || schema.equalsIgnoreCase("ifc4") || schema.equalsIgnoreCase("ifc4x3"))) {
-			throw new UserException("Invalid schema, the only 2 valid options are: \"ifc2x3tc1\" and \"ifc4\", not \"" + this.schema + "\"");
+
+		if (Schema.fromIfcHeader(schema) == null) {
+			throw new UserException("Invalid schema, the only 3 valid options are: \"ifc2x3tc1\", \"ifc4\" and \\\"ifc4x3_add2\\\", not \"" + this.schema + "\"");
 		}
 		
 		schema = schema.toLowerCase();
