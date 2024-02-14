@@ -49,7 +49,7 @@ public class GenerateGeometryLibrary {
 	public static void main(String[] args) {
 		new GenerateGeometryLibrary().generate(Ifc2x3tc1Package.eINSTANCE, Schema.IFC2X3TC1);
 		new GenerateGeometryLibrary().generate(Ifc4Package.eINSTANCE, Schema.IFC4);
-		new GenerateGeometryLibrary().generate(Ifc4x3Package.eINSTANCE, Schema.IFC4X3_ADD2);
+		new GenerateGeometryLibrary().generate(Ifc4x3Package.eINSTANCE, Schema.IFC4X3);
 	}
 
 	private void generate(EPackage ePackage, Schema schema) {

@@ -112,7 +112,7 @@ public class PackageMetaData implements ObjectFactory, Comparable<PackageMetaDat
 					schemaDefinition = SchemaLoader.loadIfc2x3tc1();
 				} else if (schema == Schema.IFC4) {
 					schemaDefinition = SchemaLoader.loadIfc4();
-				} else if (schema == Schema.IFC4X3_ADD2) {
+				} else if (schema == Schema.IFC4X3) {
 					schemaDefinition = SchemaLoader.loadIfc4x3();
 				} else {
 					LOGGER.error("Unimplemented schema: " + schema);

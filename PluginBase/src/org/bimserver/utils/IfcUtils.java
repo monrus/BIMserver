@@ -749,7 +749,7 @@ public class IfcUtils {
 			if (prefix != null) {
 				return LengthUnit.fromPrefix(prefix);
 			}
-		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4X3_ADD2) {
+		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4X3) {
 			org.bimserver.models.ifc4x3.IfcSIPrefix prefix = getUnitPrefix(model, org.bimserver.models.ifc4x3.IfcUnitEnum.LENGTHUNIT);
 			if (prefix != null) {
 				return LengthUnit.fromPrefix(prefix);
@@ -769,7 +769,7 @@ public class IfcUtils {
 			if (prefix != null) {
 				return MassUnit.fromPrefix(prefix);
 			}
-		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4X3_ADD2) {
+		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4X3) {
 			org.bimserver.models.ifc4x3.IfcSIPrefix prefix = getUnitPrefix(model, org.bimserver.models.ifc4x3.IfcUnitEnum.MASSUNIT);
 			if (prefix != null) {
 				return MassUnit.fromPrefix(prefix);
@@ -789,7 +789,7 @@ public class IfcUtils {
 			if (prefix != null) {
 				return AreaUnit.fromPrefix(prefix);
 			}
-		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4X3_ADD2) {
+		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4X3) {
 			org.bimserver.models.ifc4x3.IfcSIPrefix prefix = getUnitPrefix(model, org.bimserver.models.ifc4x3.IfcUnitEnum.AREAUNIT);
 			if (prefix != null) {
 				return AreaUnit.fromPrefix(prefix);
@@ -809,7 +809,7 @@ public class IfcUtils {
 			if (prefix != null) {
 				return VolumeUnit.fromPrefix(prefix);
 			}
-		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4X3_ADD2) {
+		} else if (model.getPackageMetaData().getSchema() == Schema.IFC4X3) {
 			org.bimserver.models.ifc4x3.IfcSIPrefix prefix = getUnitPrefix(model, org.bimserver.models.ifc4x3.IfcUnitEnum.VOLUMEUNIT);
 			if (prefix != null) {
 				return VolumeUnit.fromPrefix(prefix);

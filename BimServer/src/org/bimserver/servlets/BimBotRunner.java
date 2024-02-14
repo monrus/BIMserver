@@ -313,7 +313,7 @@ public class BimBotRunner implements Runnable {
 		} else if (schema == SchemaName.IFC_JSON_4) {
 			return Schema.IFC4.toString().toLowerCase();
 		} else if (schema == SchemaName.IFC_JSON_4X3) {
-			return Schema.IFC4X3_ADD2.toString().toLowerCase();
+			return Schema.IFC4X3.toString().toLowerCase();
 		}
 		return null;
 	}

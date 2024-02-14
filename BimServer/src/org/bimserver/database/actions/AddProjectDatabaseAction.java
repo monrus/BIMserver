@@ -95,7 +95,7 @@ public class AddProjectDatabaseAction extends BimDatabaseAction<Project> {
 		}
 
 		if (Schema.fromIfcHeader(schema) == null) {
-			throw new UserException("Invalid schema, the only 3 valid options are: \"ifc2x3tc1\", \"ifc4\" and \\\"ifc4x3_add2\\\", not \"" + this.schema + "\"");
+			throw new UserException("Invalid schema, the only 4 valid options are: \"ifc2x3tc1\", \"ifc4\", \\\"ifc4x3\\\" and \\\"ifc4x3_add2\\\", not \"" + this.schema + "\"");
 		}
 		
 		schema = schema.toLowerCase();
