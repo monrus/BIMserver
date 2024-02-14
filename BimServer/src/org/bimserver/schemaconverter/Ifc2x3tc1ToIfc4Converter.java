@@ -24,7 +24,7 @@ import org.bimserver.emf.Schema;
 import org.bimserver.models.ifc2x3tc1.Ifc2x3tc1Package;
 import org.bimserver.models.ifc4.Ifc4Package;
 
-public class Ifc2x3tc1ToIfc4Converter extends AbstractSchemaConverter implements SchemaConverter {
+public class Ifc2x3tc1ToIfc4Converter extends AbstractSchemaConverter {
 
 	public Ifc2x3tc1ToIfc4Converter(IfcModelInterface source, IfcModelInterface target) {
 		super(source, target);
@@ -45,11 +45,11 @@ public class Ifc2x3tc1ToIfc4Converter extends AbstractSchemaConverter implements
 
 	@Override
 	public Schema getSourceSchema() {
-		return Schema.IFC4;
+		return Schema.IFC2X3TC1;
 	}
 
 	@Override
 	public Schema getTargetSchema() {
-		return Schema.IFC2X3TC1;
+		return Schema.IFC4;
 	}
 }

@@ -6,10 +6,9 @@
 	<parent>
 		<groupId>org.opensourcebim</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.5.183-SNAPSHOT</version>
+		<version>1.5.186-SNAPSHOT</version>
 	</parent>
 	<properties>
-		<jetty.version>9.4.38.v20210224</jetty.version>
 		<cxf.version>3.3.2</cxf.version>
 	</properties>
 	<build>
@@ -48,7 +47,7 @@
 		<dependency>
 			<groupId>org.opensourcebim</groupId>
 			<artifactId>shared</artifactId>
-			<version>${project.version}</version>
+			<version>1.5.186-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

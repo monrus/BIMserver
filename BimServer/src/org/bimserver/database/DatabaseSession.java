@@ -57,6 +57,7 @@ import org.bimserver.ifc.BasicIfcModel;
 import org.bimserver.models.geometry.GeometryPackage;
 import org.bimserver.models.ifc2x3tc1.Ifc2x3tc1Package;
 import org.bimserver.models.ifc4.Ifc4Package;
+import org.bimserver.models.ifc4x3.Ifc4x3Package;
 import org.bimserver.models.store.Checkout;
 import org.bimserver.models.store.ConcreteRevision;
 import org.bimserver.models.store.DatabaseInformation;
@@ -1557,7 +1558,10 @@ public class DatabaseSession implements LazyLoader, OidProvider, DatabaseInterfa
 	}
 
 	public static boolean perRecordVersioning(EClass eClass) {
-		return eClass.getEPackage() != Ifc2x3tc1Package.eINSTANCE && eClass.getEPackage() != Ifc4Package.eINSTANCE && eClass.getEPackage() != GeometryPackage.eINSTANCE;
+		return eClass.getEPackage() != Ifc2x3tc1Package.eINSTANCE &&
+			eClass.getEPackage() != Ifc4Package.eINSTANCE &&
+			eClass.getEPackage() != Ifc4x3Package.eINSTANCE &&
+			eClass.getEPackage() != GeometryPackage.eINSTANCE;
 	}
 
 	public IfcModelInterface createModel(PackageMetaData packageMetaData, Map<Integer, Long> pidRoidMap) {

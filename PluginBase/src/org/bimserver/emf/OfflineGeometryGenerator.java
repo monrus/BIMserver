@@ -34,7 +34,7 @@ import org.bimserver.models.geometry.GeometryData;
 import org.bimserver.models.geometry.GeometryFactory;
 import org.bimserver.models.geometry.GeometryInfo;
 import org.bimserver.models.geometry.Vector3f;
-import org.bimserver.models.ifc4.IfcProduct;
+import org.bimserver.models.ifc4x3.IfcProduct;
 import org.bimserver.plugins.renderengine.EntityNotFoundException;
 import org.bimserver.plugins.renderengine.IndexFormat;
 import org.bimserver.plugins.renderengine.Precision;

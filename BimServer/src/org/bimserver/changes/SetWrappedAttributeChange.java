@@ -31,6 +31,7 @@ import org.bimserver.emf.PackageMetaData;
 import org.bimserver.models.ifc2x3tc1.Ifc2x3tc1Package;
 import org.bimserver.models.ifc2x3tc1.Tristate;
 import org.bimserver.models.ifc4.Ifc4Package;
+import org.bimserver.models.ifc4x3.Ifc4x3Package;
 import org.bimserver.shared.HashMapVirtualObject;
 import org.bimserver.shared.HashMapWrappedVirtualObject;
 import org.bimserver.shared.exceptions.UserException;
@@ -118,6 +119,10 @@ public class SetWrappedAttributeChange implements Change {
 				} else if (typeEClass == Ifc4Package.eINSTANCE.getIfcBoolean()) {
 					if (value instanceof Boolean || value.getClass().equals(boolean.class)) {
 						value = org.bimserver.models.ifc4.Tristate.valueOf(((Boolean) value).toString().toUpperCase());
+					}
+				} else if (typeEClass == Ifc4x3Package.eINSTANCE.getIfcBoolean()) {
+					if (value instanceof Boolean || value.getClass().equals(boolean.class)) {
+						value = org.bimserver.models.ifc4x3.Tristate.valueOf(((Boolean) value).toString().toUpperCase());
 					}
 				}
 				wrappedObject.set(wrappedObject.eClass().getEStructuralFeature("wrappedValue").getName(), value);
