@@ -84,10 +84,6 @@ public interface KeyValueStore {
 
 	List<byte[]> getDuplicates(String tableName, byte[] keyBytes, DatabaseSession databaseSession) throws BimserverDatabaseException;
 
-	void delete(String tableName, int pidToDelete, DatabaseSession databaseSession) throws BimserverLockConflictException;
-
-	void deleteProj(String tableName, long pidToDelete, DatabaseSession databaseSession) throws BimserverLockConflictException;
-
 	void delete(String indexTableName, byte[] featureBytesOldIndex, byte[] array, DatabaseSession databaseSession) throws BimserverLockConflictException;
 
 	boolean isTransactional(DatabaseSession databaseSession, String tableName) throws BimserverDatabaseException;
