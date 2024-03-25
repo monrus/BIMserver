@@ -2,17 +2,17 @@ package org.bimserver.database.berkeley;
 
 /******************************************************************************
  * Copyright (C) 2009-2019  BIMserver.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see {@literal<http://www.gnu.org/licenses/>}.
  *****************************************************************************/
@@ -126,7 +126,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 			String message = "A database initialisation error has occured (" + e.getMessage() + ")";
 			throw new DatabaseInitException(message);
 		}
-
+		
 		transactionConfig = new TransactionConfig();
 		transactionConfig.setReadCommitted(true);
 
@@ -171,7 +171,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 			return false;
 		}
 		tables.put(tableName, new TableWrapper(database, finalTransactional));
-
+		
 		return true;
 	}
 
@@ -194,10 +194,10 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 			return false;
 		}
 		tables.put(tableName, new TableWrapper(database, finalTransactional));
-
+		
 		return true;
 	}
-
+	
 	public boolean openTable(DatabaseSession databaseSession, String tableName, boolean transactional) throws BimserverDatabaseException {
 		if (tables.containsKey(tableName)) {
 			throw new BimserverDatabaseException("Table " + tableName + " already opened");
@@ -240,7 +240,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 		}
 		tables.put(tableName, new TableWrapper(database, finalTransactional));
 	}
-
+	
 	private Database getDatabase(String tableName) throws BimserverDatabaseException {
 		return getTableWrapper(tableName).getDatabase();
 	}
@@ -287,15 +287,15 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 			return LockMode.READ_UNCOMMITTED;
 		}
 	}
-
+	
 	public boolean isTransactional(DatabaseSession databaseSession, String tableName) throws BimserverDatabaseException {
 		return getTableWrapper(tableName).isTransactional() ? getTransaction(databaseSession) != null : false;
 	}
-
+	
 	public Transaction getTransaction(DatabaseSession databaseSession, TableWrapper tableWrapper) {
 		return tableWrapper.isTransactional() ? getTransaction(databaseSession) : null;
 	}
-
+	
 	public CursorConfig getCursorConfig(TableWrapper tableWrapper) {
 		if (tableWrapper.isTransactional()) {
 			return safeCursorConfig;
@@ -303,7 +303,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 			return unsafeCursorConfig;
 		}
 	}
-
+	
 	@Override
 	public byte[] get(String tableName, byte[] keyBytes, DatabaseSession databaseSession) throws BimserverDatabaseException {
 		DatabaseEntry key = new DatabaseEntry(keyBytes);
@@ -459,7 +459,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 			LOGGER.error("", e);
 		}
 	}
-
+	
 	@Override
 	public void delete(String indexTableName, byte[] featureBytesOldIndex, byte[] array, DatabaseSession databaseSession) throws BimserverLockConflictException {
 		try {
@@ -521,7 +521,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 	public void store(String tableName, byte[] key, byte[] value, DatabaseSession databaseSession) throws BimserverDatabaseException, BimserverLockConflictException {
 		store(tableName, key, value, 0, value.length, databaseSession);
 	}
-
+	
 	@Override
 	public void store(String tableName, byte[] key, byte[] value, int offset, int length, DatabaseSession databaseSession) throws BimserverDatabaseException, BimserverLockConflictException {
 		DatabaseEntry dbKey = new DatabaseEntry(key);
@@ -540,7 +540,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 	public void storeNoOverwrite(String tableName, byte[] key, byte[] value, DatabaseSession databaseSession) throws BimserverDatabaseException, BimserverLockConflictException, BimserverConcurrentModificationDatabaseException {
 		storeNoOverwrite(tableName, key, value, 0, value.length, databaseSession);
 	}
-
+	
 	@Override
 	public void storeNoOverwrite(String tableName, byte[] key, byte[] value, int index, int length, DatabaseSession databaseSession) throws BimserverDatabaseException, BimserverLockConflictException, BimserverConcurrentModificationDatabaseException {
 		DatabaseEntry dbKey = new DatabaseEntry(key);
@@ -569,7 +569,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 			throw new BimserverDatabaseException("", e);
 		}
 	}
-
+	
 	@Override
 	public String getType() {
 		return "Berkeley DB Java Edition " + JEVersion.CURRENT_VERSION.toString();
@@ -588,11 +588,11 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 		}
 		return size;
 	}
-
+	
 	public Set<String> getAllTableNames() {
 		return new HashSet<String>(environment.getDatabaseNames());
 	}
-
+	
 	public synchronized void incrementReads(long reads) {
 		this.reads += reads;
 		if (this.reads / 1000000 != lastPrintedReads) {
@@ -600,7 +600,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 			lastPrintedReads = this.reads / 1000000;
 		}
 	}
-
+	
 	@Override
 	public synchronized void incrementCommittedWrites(long committedWrites) {
 		this.committedWrites += committedWrites;
@@ -608,7 +608,7 @@ public class BerkeleyKeyValueStore implements KeyValueStore {
 		if (this.committedWrites / printThreshold != lastPrintedCommittedWrites) {
 			lastPrintedCommittedWrites = this.committedWrites / printThreshold;
 			long start = System.nanoTime();
-
+			
 			// This is a test, when writing large amount of data (IFC data), this should keep memory usage limited because it'll write the data to disk
 			sync();
 			long end = System.nanoTime();

@@ -443,10 +443,6 @@ public interface ServiceInterface extends PublicInterface {
 	Boolean deleteProject(
 		@WebParam(name = "poid", partName = "deleteProject.poid") Long poid) throws ServerException, UserException;
 
-	@WebMethod(action = "hardDeleteProject")
-	Boolean hardDeleteProject(
-		@WebParam(name = "poid", partName = "hardDeleteProject.poid") Long poid) throws ServerException, UserException;
-
 	@WebMethod(action = "getExtendedDataSchemaByName")
 	SExtendedDataSchema getExtendedDataSchemaByName(
 		@WebParam(name = "name", partName = "getExtendedDataSchemaByName.name") String name) throws UserException, ServerException;

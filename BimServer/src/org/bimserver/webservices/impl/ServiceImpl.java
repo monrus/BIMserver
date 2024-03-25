@@ -2,17 +2,17 @@ package org.bimserver.webservices.impl;
 
 /******************************************************************************
  * Copyright (C) 2009-2019  BIMserver.org
- *
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see {@literal<http://www.gnu.org/licenses/>}.
  *****************************************************************************/
@@ -64,7 +64,98 @@ import org.bimserver.client.json.JsonBimServerClientFactory;
 import org.bimserver.database.DatabaseSession;
 import org.bimserver.database.OldQuery;
 import org.bimserver.database.OperationType;
-import org.bimserver.database.actions.*;
+import org.bimserver.database.actions.AddExtendedDataSchemaDatabaseAction;
+import org.bimserver.database.actions.AddExtendedDataToProjectDatabaseAction;
+import org.bimserver.database.actions.AddExtendedDataToRevisionDatabaseAction;
+import org.bimserver.database.actions.AddLocalServiceToProjectDatabaseAction;
+import org.bimserver.database.actions.AddModelCheckerDatabaseAction;
+import org.bimserver.database.actions.AddModelCheckerToProjectDatabaseAction;
+import org.bimserver.database.actions.AddNewServiceToProjectDatabaseAction;
+import org.bimserver.database.actions.AddProjectDatabaseAction;
+import org.bimserver.database.actions.AddServiceToProjectDatabaseAction;
+import org.bimserver.database.actions.AddUserDatabaseAction;
+import org.bimserver.database.actions.AddUserToExtendedDataSchemaDatabaseAction;
+import org.bimserver.database.actions.AddUserToProjectDatabaseAction;
+import org.bimserver.database.actions.BimDatabaseAction;
+import org.bimserver.database.actions.BranchToExistingProjectDatabaseAction;
+import org.bimserver.database.actions.BranchToNewProjectDatabaseAction;
+import org.bimserver.database.actions.ChangeUserTypeDatabaseAction;
+import org.bimserver.database.actions.CheckinDatabaseAction;
+import org.bimserver.database.actions.CloneToNewProjectDatabaseAction;
+import org.bimserver.database.actions.CompareDatabaseAction;
+import org.bimserver.database.actions.DeleteProjectDatabaseAction;
+import org.bimserver.database.actions.DeleteServiceDatabaseAction;
+import org.bimserver.database.actions.DeleteUserDatabaseAction;
+import org.bimserver.database.actions.GetAllAuthorizedUsersOfProjectDatabaseAction;
+import org.bimserver.database.actions.GetAllCheckoutsByUserDatabaseAction;
+import org.bimserver.database.actions.GetAllCheckoutsOfProjectDatabaseAction;
+import org.bimserver.database.actions.GetAllCheckoutsOfRevisionDatabaseAction;
+import org.bimserver.database.actions.GetAllExtendedDataSchemasDatabaseAction;
+import org.bimserver.database.actions.GetAllModelCheckersDatabaseAction;
+import org.bimserver.database.actions.GetAllNewServicesOfProjectDatabaseAction;
+import org.bimserver.database.actions.GetAllNonAuthorizedProjectsOfUserDatabaseAction;
+import org.bimserver.database.actions.GetAllNonAuthorizedUsersOfProjectDatabaseAction;
+import org.bimserver.database.actions.GetAllProjectsDatabaseAction;
+import org.bimserver.database.actions.GetAllProjectsSmallDatabaseAction;
+import org.bimserver.database.actions.GetAllReadableProjectsDatabaseAction;
+import org.bimserver.database.actions.GetAllRelatedProjectsDatabaseAction;
+import org.bimserver.database.actions.GetAllRevisionsByUserDatabaseAction;
+import org.bimserver.database.actions.GetAllRevisionsOfProjectDatabaseAction;
+import org.bimserver.database.actions.GetAllServicesOfProjectDatabaseAction;
+import org.bimserver.database.actions.GetAllUsersDatabaseAction;
+import org.bimserver.database.actions.GetAllWritableProjectsDatabaseAction;
+import org.bimserver.database.actions.GetAreaDatabaseAction;
+import org.bimserver.database.actions.GetAvailableClassesDatabaseAction;
+import org.bimserver.database.actions.GetAvailableClassesInRevisionDatabaseAction;
+import org.bimserver.database.actions.GetCheckinWarningsDatabaseAction;
+import org.bimserver.database.actions.GetCheckoutWarningsDatabaseAction;
+import org.bimserver.database.actions.GetDeserializerByIdDatabaseAction;
+import org.bimserver.database.actions.GetDeserializerByNameDatabaseAction;
+import org.bimserver.database.actions.GetExtendedDataByIdDatabaseAction;
+import org.bimserver.database.actions.GetExtendedDataSchemaByIdDatabaseAction;
+import org.bimserver.database.actions.GetExtendedDataSchemaByNameDatabaseAction;
+import org.bimserver.database.actions.GetGeoTagDatabaseAction;
+import org.bimserver.database.actions.GetGeometryInfoDatabaseAction;
+import org.bimserver.database.actions.GetIfcHeaderDatabaseAction;
+import org.bimserver.database.actions.GetModelCheckerOidDatabaseAction;
+import org.bimserver.database.actions.GetNrPrimitivesDatabaseAction;
+import org.bimserver.database.actions.GetNrPrimitivesTotalDatabaseAction;
+import org.bimserver.database.actions.GetOidByGuidDatabaseAction;
+import org.bimserver.database.actions.GetProjectByPoidDatabaseAction;
+import org.bimserver.database.actions.GetProjectByUuidDatabaseAction;
+import org.bimserver.database.actions.GetProjectsByNameDatabaseAction;
+import org.bimserver.database.actions.GetProjectsOfUserDatabaseAction;
+import org.bimserver.database.actions.GetQueryEngineByIdDatabaseAction;
+import org.bimserver.database.actions.GetQueryEngineByNameDatabaseAction;
+import org.bimserver.database.actions.GetRevisionDatabaseAction;
+import org.bimserver.database.actions.GetRevisionSummaryDatabaseAction;
+import org.bimserver.database.actions.GetSerializerByContentTypeDatabaseAction;
+import org.bimserver.database.actions.GetSerializerByIdDatabaseAction;
+import org.bimserver.database.actions.GetSerializerByNameDatabaseAction;
+import org.bimserver.database.actions.GetSubProjectByNameDatabaseAction;
+import org.bimserver.database.actions.GetSubProjectsDatabaseAction;
+import org.bimserver.database.actions.GetTopLevelProjectByNameDatabaseAction;
+import org.bimserver.database.actions.GetUserByUoidDatabaseAction;
+import org.bimserver.database.actions.GetUserByUserNameDatabaseAction;
+import org.bimserver.database.actions.GetVolumeDatabaseAction;
+import org.bimserver.database.actions.RegenerateGeometryDatabaseAction;
+import org.bimserver.database.actions.RemoveModelCheckerFromProjectDatabaseAction;
+import org.bimserver.database.actions.RemoveNewServiceFromProjectDatabaseAction;
+import org.bimserver.database.actions.RemoveServiceFromProjectDatabaseAction;
+import org.bimserver.database.actions.RemoveUserFromExtendedDataSchemaDatabaseAction;
+import org.bimserver.database.actions.RemoveUserFromProjectDatabaseAction;
+import org.bimserver.database.actions.SetRevisionTagDatabaseAction;
+import org.bimserver.database.actions.StreamingCheckinDatabaseAction;
+import org.bimserver.database.actions.UndeleteProjectDatabaseAction;
+import org.bimserver.database.actions.UndeleteUserDatabaseAction;
+import org.bimserver.database.actions.UpdateGeoTagDatabaseAction;
+import org.bimserver.database.actions.UpdateModelCheckerDatabaseAction;
+import org.bimserver.database.actions.UpdateProjectDatabaseAction;
+import org.bimserver.database.actions.UpdateRevisionDatabaseAction;
+import org.bimserver.database.actions.UploadFileDatabaseAction;
+import org.bimserver.database.actions.UserHasCheckinRightsDatabaseAction;
+import org.bimserver.database.actions.UserHasRightsDatabaseAction;
+import org.bimserver.database.actions.ValidateModelCheckerDatabaseAction;
 import org.bimserver.database.queries.om.DefaultQueries;
 import org.bimserver.database.queries.om.JsonQueryObjectModelConverter;
 import org.bimserver.database.queries.om.Query;
@@ -640,7 +731,7 @@ public class ServiceImpl extends GenericServiceImpl implements ServiceInterface 
 			session.close();
 		}
 	}
-
+	
 	@Override
 	public Long branchToNewProject(Long roid, String projectName, String comment, Boolean sync) throws UserException, ServerException {
 		requireRealUserAuthentication();
@@ -867,16 +958,6 @@ public class ServiceImpl extends GenericServiceImpl implements ServiceInterface 
 			return handleException(e);
 		} finally {
 			session.close();
-		}
-	}
-	@Override
-	public Boolean hardDeleteProject(Long poid) throws ServerException, UserException {
-		requireRealUserAuthentication();
-		try (DatabaseSession session = getBimServer().getDatabase().createSession(OperationType.POSSIBLY_WRITE)) {
-			BimDatabaseAction<Boolean> action = new HardDeleteDatabaseAction(getBimServer(), session, getInternalAccessMethod(), poid, getAuthorization());
-			return session.executeAndCommitAction(action);
-		} catch (Exception e) {
-			return handleException(e);
 		}
 	}
 
