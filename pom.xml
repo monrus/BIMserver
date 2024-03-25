@@ -181,10 +181,4 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-	<repositories>
-			<repository>
-				<id>brusnika-tech-repo</id>
-				<url>https://repo.brusnika.tech/repository/maven-snapshots/</url>
-			</repository>
-	</repositories>
 </project>
